@@ -1,4 +1,4 @@
-# InstaPicture
+# InstaPicture 1.0
 
 > SJTU-EE458 Course Project, Spring 2020.
 
