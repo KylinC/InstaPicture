@@ -1,0 +1,9 @@
+.page{width:100%;min-height:100vh;background-color:#FFFFFF;}
+.main{width:100%;padding-top:1.2rem;display:flex;display:-webkit-flex;justify-content: space-between;-webkit-justify-content: space-between;padding-left:3%;padding-right:3%;box-sizing: border-box;-webkit-box-sizing: border-box;flex-wrap: wrap;-webkit-flex-wrap:wrap;}
+.main .goods-list{width:46%;height:5.8rem;margin-bottom:0.3rem;}
+.main .goods-list .image{width:3.36rem;height:3.36rem;}
+.main .goods-list .image img{width:100%;height:100%;}
+.main .goods-list .title{width:100%;height:0.8rem;overflow: hidden;font-size:0.28rem;margin-top:0.2rem;}
+.main .goods-list .price{width:100%;font-size:0.8rem;color:#f93036;font-size:0.28rem;margin-top:0.2rem;}
+.main .goods-list .btn-wrap{width:100%;margin-top:0.2rem;display: flex;display:-webkit-flex;justify-content: space-between;-webkit-justify-content: space-between;}
+.main .goods-list .btn-wrap .btn{width:1.08rem;height:0.56rem;border:#f93036 1px solid;border-radius: 4px;font-size:0.28rem;color:#f93036;text-align: center;line-height:0.56rem;}
