@@ -1,0 +1,166 @@
+body{
+  /*边界看宽度默认为8,在这里初始值设为零*/
+  margin: 0;
+  font-family: 楷体;
+}
+/* 标题 */
+.header {
+  padding: 20px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+}
+
+/* 标题字体加大 */
+.header h1 {
+  font-size: 40px;
+}
+.item{
+  display: flex;
+  background-color: #fff;
+  padding: 20px;
+}
+/*顶部view样式*/
+.topRightView{
+  display: flex;
+  flex-direction: column;
+  flex:1
+}
+/*昵称和发送时间样式*/
+.nickNameAndSendTime{
+  display: flex;
+  justify-content: space-between; /**主轴的对齐方式*/
+}
+
+/**头像列表组件*/
+.imgStyle{
+  width: 30px;
+  height: 30px;
+  border-radius: 40px;
+  margin-right: 10px;
+}
+/* 测试图片 */
+.fakeimg {
+  width: 80%;
+  padding: 20px;
+}
+
+/*横线样式*/
+.hrStyle{
+  margin-top: -1px;
+}
+.ulStyle{
+  display:flex;
+  height: 40px;
+  align-items: center;
+  margin-left: -40px;
+}
+/*点赞 转发*/
+.liStyle{
+  display: flex;
+  color: orange;
+  flex: 1.0;
+  font-size: 16px;
+  justify-content: center;
+}
+.commentViewStyle{
+  background-color: #fff;
+  margin-top: -17px;
+}
+
+.shuxian{
+  height: 20px;
+  width: 1px;
+  background-color: grey;
+}
+/* 底部 */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: rgb(179, 177, 177);
+}
+.demo{
+	width:100%;
+	height:250px;
+	border:2px solid rgb(160, 139, 144);
+	background:#CCC;
+}
+.demo{
+  border-radius: 30px 30px;
+  }
+.demo{
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+ }
+ .part{
+  width:100%;
+	height:24px;
+	border:2px solid rgb(151, 123, 130);
+	background:#CCC;
+ }
+ .part{
+  border-radius: 30px 30px;
+ }
+ .part{
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+ }
+ .littlepart{
+  width:85%;
+  height:40px;
+  margin-bottom: 10px;
+	border:2px solid rgb(151, 123, 130);
+	background:rgb(198, 231, 216);
+ }
+ .littlepart{
+  border-radius: 0px 0px;
+ }
+ .littlepart{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+ }
+ .button {  
+  display: inline-block;  
+  zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */  
+  *display: inline;  
+  vertical-align: baseline;  
+  margin: 0 2px;  
+  outline: none;  
+  cursor: pointer;  
+  text-align: center;  
+  text-decoration: none;  
+  font: 14px/100% Arial, Helvetica, sans-serif;  
+  padding: .5em 2em .55em;  
+  text-shadow: 0 1px 1px rgba(12, 247, 247, 0.3);  
+  -webkit-border-radius: .5em;   
+  -moz-border-radius: .5em;  
+  border-radius: .5em;  
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);  
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+}
+.button:hover {  
+  text-decoration: none; 
+}  
+.button:active {  
+  position: relative;  
+  top: 1px;  
+} 
+.butstyle{
+  display:flex;
+  height: 30px;
+  align-items: center;
+  margin-right: 0px;
+} 
+.wid{
+  text-align: center;
+  width: 100%;
+  margin-left: 1px;
+  margin-right: 40px;
+}

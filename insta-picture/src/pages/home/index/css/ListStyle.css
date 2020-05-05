@@ -1,0 +1,15 @@
+.listRootViewStyle {
+  background-color: rgb(206, 218, 240); /**背景色*/
+  padding: 0px;  /**设置内边距**/
+
+}
+.item{
+  display: flex;
+  background-color: #fff;
+  padding: 20px;
+}
+.items{
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+}

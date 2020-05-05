@@ -17,10 +17,10 @@ class HomeComponent extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            bHomeStyle:true,
-            bCartStyle:false,
-            bAlbumStyle:false,
-            bMyStyle:false,
+            bHomeStyle:true,//照片管理
+            bCartStyle:false,//好友管理
+            bAlbumStyle:false,//内容管理
+            bMyStyle:false,//用户管理
             activeColor:"#B15BFF",
             noneActiveColor:"#000000"
         }
@@ -30,6 +30,7 @@ class HomeComponent extends React.Component{
     componentDidMount(){
         this.handleNavStyle(this.props)
     }
+    //新的生命周期
     componentWillReceiveProps(newProps){
         this.handleNavStyle(newProps)
     }

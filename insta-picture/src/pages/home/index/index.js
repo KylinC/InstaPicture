@@ -10,7 +10,10 @@ import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faList, faUserCircle} from '@fortawesome/free-solid-svg-icons'
 
-class  IndexComponent extends React.Component{
+import ContentPage from './contentPage/index.js';
+
+
+class IndexComponent extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -53,10 +56,12 @@ class  IndexComponent extends React.Component{
 
     render(){
         return(
-            <div className={Css['page']}>
-                <div className={this.state.bScroll?Css['search-header']+" "+Css["red-bg"]:Css['search-header']+" "+Css["red-bg"]}>
-                    <div className={Css['classify-icon']}>
-                        <FontAwesomeIcon size="lg" icon={faList} />
+            <div>
+                {this.state.bScroll?(
+                    <div className={Css['page']}>
+                         <div className={this.state.bScroll?Css['search-header']+" "+Css["red-bg"]:Css['search-header']+" "+Css["red-bg"]}>
+                              <div className={Css['classify-icon']}>
+                                <FontAwesomeIcon size="lg" icon={faList} />
                     </div>
 
                     <div className={Css['login-wrap']}>
@@ -66,12 +71,18 @@ class  IndexComponent extends React.Component{
                             </div>
                         }
                     </div>
+                   
+                  </div>
+                 </div>
+                ):(null)}
+                <div>
+                    <ContentPage />
                 </div>
-
-
-
-
+              
             </div>
+             
+         
+            
         );
     }
 }

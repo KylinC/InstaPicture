@@ -6,6 +6,7 @@ import  {HashRouter as Router,Route,Switch,Redirect}  from  'react-router-dom';
 import {AuthRoute} from './routes/private';
 import asyncComponents from './components/async/AsyncComponent';
 import config from './assets/js/conf/config.js';
+const PersonalPage=asyncComponents(()=>import('./pages/home/index/personalpage/index'));
 const HomeComponent=asyncComponents(()=>import('./pages/home/home/index'));
 const LoginIndex=asyncComponents(()=>import('./pages/home/login/index'));
 const RegIndex=asyncComponents(()=>import('./pages/home/reg/index'));
@@ -21,6 +22,7 @@ export default class RouterComponent extends React.Component{
                 <Router>
                     <React.Fragment>
                         <Switch>
+                            <Route path={config.path+"home/index/personalpage/index"} component={PersonalPage} ></Route>
                             <Route path={config.path+"home"} component={HomeComponent} ></Route>
                             <Route path={config.path+"login/index"} component={LoginIndex} ></Route>
                             <Route path={config.path+"reg/index"} component={RegIndex} ></Route>

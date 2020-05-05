@@ -104,7 +104,7 @@ class  IndexComponent extends React.Component{
                         <li></li>
                     </ul>
                     <ul onClick={this.pushPage.bind(this, 'user/myfav/index')}>
-                        <li>我的收藏</li>
+                        <li>我的主页</li>
                         <li></li>
                     </ul>
                     <div className={Css['btn']} onClick={this.outLogin.bind(this)}>{this.props.state.user.isLogin===true?"安全退出":"登录/注册"}</div>
