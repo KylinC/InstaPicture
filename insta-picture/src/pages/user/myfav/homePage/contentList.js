@@ -40,7 +40,6 @@ export default class ContentList extends Component {
         <img src={require('../img/tiger.jpg')} className={styles.imgStyle}></img>
         <div className={styles.topRightView}>
           <div className={styles.nickNameAndSendTime}>
-            <span>{data.sendTime}</span>
           </div>
           <img src={require('../img/tiger.jpg')} className={styles.fakeimg}></img>
           <p>{data.content}</p>

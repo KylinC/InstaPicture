@@ -35,23 +35,20 @@ export default class HomePage extends Component {
       <div className={styles.item}>
 
         <div className={styles.demo}>
-          <p>
+          <p className={styles.isolation}>
               头像：<img src={require('../img/tiger.jpg')} className={styles.imgStyle}></img>
           </p>
-          <p>
+          <p className={styles.isolation}>
               ID：{datas.personalInfo.ID}
           </p>
-          <p>
+          <p className={styles.isolation}>
               Name：{datas.personalInfo.name}
           </p>
-          <p>
+          <p className={styles.isolation}>
               Gender：{datas.personalInfo.gender}
           </p>
-          <p>
+          <p className={styles.isolation}>
               Interest Tag：{datas.personalInfo.interest}
-          </p>
-          <p>
-              Signature:{datas.personalInfo.signature}
           </p>
         </div>
       

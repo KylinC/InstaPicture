@@ -4,8 +4,7 @@
             "ID": "123456",
             "name":"小张",
             "gender": "secret",
-            "interest": "cat",
-            "signature": "believe yourself"
+            "interest": "cat"
         },
         "contentsInfo":[
             {

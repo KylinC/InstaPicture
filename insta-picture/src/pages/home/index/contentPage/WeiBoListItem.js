@@ -49,7 +49,6 @@ export default class WeiBoListItem extends Component {
         <div className={styles.topRightView}>
           <div className={styles.nickNameAndSendTime}>
             <span>{data.nickName}</span> 
-            <span>{data.sendTime}</span>
           </div>
           <img src={require('../img/tiger.jpg')} className={styles.fakeimg}></img>
           <p>{data.content}</p>
