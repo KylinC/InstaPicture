@@ -5,3 +5,26 @@
 > InstaPicture is a photo-sharing application where users can upload photos/smallposts/videos to share with followers
 
 
+
+## Technology stack
+
+### Front-End
+
+- react
+- react-redux
+- react-router4
+- es6
+
+### Back-End
+
+- express
+- nodejs
+- mongoose
+- MongoDB
+
+
+
+## Demo
+
+<img style="height:500px;" src="http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-09-181327.png">
+
