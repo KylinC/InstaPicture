@@ -1,0 +1,16 @@
+.page{width:100%;height:100vh;background-color: #ffffff;}
+.main{width:100%;padding-top:1.4rem;}
+.cellphone-wrap{width:90%;height:0.84rem;margin:0 auto;display: flex;display: -webkit-flex;justify-content: space-between;-webkit-justify-content: space-between;}
+.cellphone-wrap .cellphone{width:100%;height:100%;border:#EFEFEF solid 1px;border-radius: 2px;}
+.cellphone-wrap .cellphone input,.code-wrap input,.password-wrap .password input{width:92%;height:100%;font-size:0.28rem;padding-left:0.2rem;}
+.cellphone-wrap .code-btn{width:35%;height:0.82rem;background:#EAEAEA;color:#717376;border:#EAEAEA solid 1px;border-radius: 2px;font-size:0.28rem;text-align:center;line-height:0.82rem;}
+.cellphone-wrap .code-btn.success{background:#FFFFFF;border:1px solid #B15BFF;color:#B15BFF}
+.code-wrap{width:90%;height:0.84rem;margin:0 auto;border-radius: 2px;border:#EFEFEF solid 1px;margin-top:0.4rem;}
+.password-wrap{width:90%;height:0.84rem;margin:0 auto;border-radius: 2px;border:#EFEFEF solid 1px;margin-top:0.4rem;display:flex;display: -webkit-flex;}
+.password-wrap .password{width:80%;height:100%;}
+.password-wrap .switch-wrap{width:20%;margin-top:0.1rem;}
+.sure-btn{width:85%;height:0.8rem;margin:0 auto;background:#B15BFF;font-size:0.36rem;color:#FFFFFF;line-height:0.8rem;text-align: center;margin-top:0.4rem;border-radius: 4px;}
+.fastreg-wrap{width:85%;display:flex;display:-webkit-flex;justify-content: space-between;-webkit-justify-content: space-between;font-size:0.24rem;margin:0 auto;margin-top:0.3rem;}
+.fastreg-wrap img{width:0.32rem;height:0.32rem;vertical-align: middle;}
+.wrap{width:90%;height:0.6rem;margin:0 auto;border-radius: 2px;border:#EFEFEF solid 1px;margin-top:0.4rem;display:flex;display: -webkit-flex;}
+.wrap .name{width:100%;height:100%;border:#EFEFEF solid 1px;border-radius: 1px;}
