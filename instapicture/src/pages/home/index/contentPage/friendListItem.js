@@ -9,12 +9,13 @@ export default class FriendListItem extends Component {
     }
   
     render() {
+      console.log(this.props.itemData);
         return(
           <div>
             <div className={styles.littlepart}>
-              <a><img src={require('../img/tiger.jpg')} className={styles.imgStyle}></img></a>
-              <a className={styles.wid}> ID: {this.props.itemData.ID}</a>
-              <a className={styles.wid}>{this.props.itemData.name}</a>
+              <a><img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={this.props.itemData.head} className={styles.imgStyle}></img></a>
+              <a className={styles.wid}> ID: {this.props.itemData.uid}</a>
+              <a className={styles.wid}>{this.props.itemData.nickname}</a>
               <a><Link to={config.path+"home/index/personalpage/index"}>访问主页</Link></a>
             </div>
               

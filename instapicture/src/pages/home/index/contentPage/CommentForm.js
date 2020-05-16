@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-
+import config from '../../../../assets/js/conf/config.js';
+import {safeAuth,lazyImg} from '../../../../assets/js/utils/util.js';
+import UpRefresh from '../../../../assets/js/libs/uprefresh.js';
+import {request} from '../../../../assets/js/libs/request.js';
 import styles from '../css/commentStyle.css';
 import CommentReplyList from './CommentReplyList' ;
 
@@ -36,8 +39,22 @@ export default class CommentForm extends Component {
     super(props);
     this.state =  {
       //默认回复内容为空
-      replycontents:this.props.itemdata,
+      replycontents:[]
     }
+  }
+  componentDidMount(){
+    this.getReco();
+  }
+  getReco(){
+    var com=[];
+    for(var i = 0, len = this.props.itemdata.length; i < len; i++){
+        request(config.proxyBaseUrl+"/api/comments/queryID?token="+config.token,"post",{uid: this.props.itemdata[i]}).then(res=>{
+            if (res.code ===200){
+                 com.push(res.data);
+            }
+        } )
+    };
+    this.setState({replycontents:com});
   }
 
   render() {

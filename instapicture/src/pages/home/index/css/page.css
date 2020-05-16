@@ -85,7 +85,7 @@ body {
 .footer {
     padding: 5px;
     text-align: center;
-    background: #ddd;
+   
 }
  
 /* 响应式布局 - 在屏幕设备宽度尺寸小于 700px 时, 让两栏上下堆叠显示 */

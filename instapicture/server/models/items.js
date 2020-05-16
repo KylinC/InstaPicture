@@ -10,7 +10,7 @@ var itemSchema=new Schema({
     "ProsNum":Number,
     "ConsNum":Number,
     "CommentNum":Number,
-    "CommentUserIDList":[Number],
+    "CommentIDList":[Number],
     "UploadTime":String
 })
 

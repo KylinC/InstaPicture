@@ -12,8 +12,9 @@ export default class WeiBoList extends Component {
   }
 
   render() {
+    //console.log(this.props.data);
     //遍历渲染每个条目
-    var ItemView = this.props.data.map(function(item,index) {
+    var ItemView = this.props.data.map(function(item,index){
       return <WeiBoListItem itemData= {item} key = {index}/>
     }) ;
 

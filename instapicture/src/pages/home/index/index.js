@@ -10,26 +10,33 @@ import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faList, faUserCircle} from '@fortawesome/free-solid-svg-icons'
 
-import ContentPage from './contentPage/index.js';
+import WeiBoList from './contentPage/WeiBoList.js' ;
+import Recitem from './data/item.json';
+import Recfriend from './data/friend.json';
+
+import styles from './css/ListItemStyle.css'
+import FriendList from './contentPage/friendList.js';
 
 
 class IndexComponent extends React.Component{
     constructor(){
         super();
         this.state = {
-            aSwiper:[],
-            aNav:[],
-            aGoods:[],
-            aRecoGoods:[],
+            sRecfriend:[],
+            sRecitem:[],
             bScroll:false,
             pageStyle:{display:"none"}
         }
         this.bScroll=true;
+        this.friend=[];
+        this.items=[];
     }
     componentDidMount(){
+        this.getReco();
         setScrollTop(global.scrollTop.index);
-
         window.addEventListener("scroll",this.eventScroll.bind(this),false);
+       
+       
     }
     componentWillUnmount(){
         this.bScroll=false;
@@ -54,7 +61,32 @@ class IndexComponent extends React.Component{
         this.props.history.push(config.path+pUrl)
     }
 
+    getReco(){
+        for(var i = 0, len = Recfriend.data.length; i < len; i++){
+            request(config.proxyBaseUrl+"/api/userinfos/queryinfo?token="+config.token,"post",{uid: Recfriend.data[i]}).then(res=>{
+                if (res.code ===200){
+                     this.friend.push(res.data);
+                }
+            } )
+        };
+        for(var i = 0, len = Recitem.data.length; i < len; i++){
+            request(config.proxyBaseUrl+"/api/items/queryID?token="+config.token,"post",{uid: Recitem.data[i]}).then(res=>{
+                if (res.code ===200){
+                     this.items.push(res.data);
+                }
+            } )
+        };
+        this.setState({sRecfriend:this.friend},()=>{
+            console.log(this.state.sRecfriend);
+        });
+        this.setState({sRecitem:this.items},()=>{
+            console.log(this.state.sRecitem);
+        });
+        
+    }
+    
     render(){
+        
         return(
             <div>
                 {this.state.bScroll?(
@@ -71,13 +103,30 @@ class IndexComponent extends React.Component{
                             </div>
                         }
                     </div>
-                   
                   </div>
                  </div>
                 ):(null)}
                 <div>
-                    <ContentPage />
+                <div className={styles.header}>
+                    <h1>InstaPicture</h1>
+                    <p>welcome</p>
                 </div>
+                <div className={styles.item}>
+                 <div className={styles.part}>
+                    可能感兴趣的陌生人
+                </div>
+               </div>
+               <FriendList data={this.state.sRecfriend} />
+                <div className={styles.item}>
+                 <div className={styles.part}>
+                    可能感兴趣的内容
+                </div>
+               </div>
+                <WeiBoList data={this.state.sRecitem} />
+                <div className={styles.footer}>
+                    meet what you want
+                </div>
+            </div>
               
             </div>
              

@@ -10,6 +10,7 @@ var imagesRouter=require('./routes/images');
 var userimfosRouter = require('./routes/userInfos');
 var indexRouter = require('./routes/index');
 var itemRouter= require('./routes/items');
+var commentRouter= require('./routes/comments');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use('/', indexRouter);
 app.use('/api/images',imagesRouter);
 app.use('/api/userinfos',userimfosRouter);
 app.use('/api/items',itemRouter);
+app.use('/api/comments',commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
