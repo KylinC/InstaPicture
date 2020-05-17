@@ -6,7 +6,7 @@ var proSchema=new Schema({
     "ProID":Number,
     "ItemID":Number,
     "ProUserID":Number,
-    "Time":String
-})
+    "Time":{type: Date, default: Date.now}
+});
 
 module.exports=mongoose.model('Pros',proSchema,'Pros');

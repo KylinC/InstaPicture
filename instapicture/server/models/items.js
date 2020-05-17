@@ -11,7 +11,8 @@ var itemSchema=new Schema({
     "ConsNum":Number,
     "CommentNum":Number,
     "CommentIDList":[Number],
-    "UploadTime":String
-})
+    "UploadTime":{type: Date, default: Date.now},
+    "ItemFeature":[Number]
+});
 
 module.exports=mongoose.model('Items',itemSchema,'Items');

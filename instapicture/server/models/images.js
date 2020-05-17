@@ -5,7 +5,7 @@ var imageSchema=new Schema({
     // Images
     "ImageID" : Number,
     "UserID" : Number,
-    "UploadTime": String,
+    "UploadTime": {type: Date, default: Date.now},
     "StoragePath" : String,
     "FeatureWeight" : Number,
     "ImageFeature" : Array,

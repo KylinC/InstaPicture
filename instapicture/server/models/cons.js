@@ -6,7 +6,7 @@ var conSchema=new Schema({
     "ConID":Number,
     "ItemID":Number,
     "ConUserID":Number,
-    "Time":String
-})
+    "Time":{type: Date, default: Date.now}
+});
 
 module.exports=mongoose.model('Cons',conSchema,'Cons');

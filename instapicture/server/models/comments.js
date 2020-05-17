@@ -7,7 +7,7 @@ var commentSchema=new Schema({
     "ItemID":Number,
     "CommentUserID":Number,
     "CommentText":String,
-    "Time":String
-})
+    "Time":{type: Date, default: Date.now}
+});
 
 module.exports=mongoose.model('Comments',commentSchema,'Comments');
