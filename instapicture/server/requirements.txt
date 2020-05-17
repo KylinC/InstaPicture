@@ -1,0 +1,15 @@
+zerorpc
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==1.5.0+cpu
+-f https://download.pytorch.org/whl/torch_stable.html
+torchvision==0.6.0+cpu
+Pillow
+pymongo
+wmi
+opencv-python
+pandas
+scipy
+scikit-learn
+tensorboard==2.0.0
+seaborn
+chardet
