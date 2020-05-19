@@ -22,6 +22,8 @@ class IndexComponent extends React.Component{
     constructor(){
         super();
         this.state = {
+            bMask:false,
+            sCartPanel:Css['down'],
             sRecfriend:[],
             sRecitem:[],
             bScroll:false,
@@ -90,6 +92,18 @@ class IndexComponent extends React.Component{
         this.props.history.push(config.path+pUrl)
     }
 
+    showCartPanel(){
+        this.refs['mask'].addEventListener("touchmove",function (e) {
+            e.preventDefault();
+        },false);
+        this.setState({sCartPanel:Css['up'],bMask:true});
+    }
+    hideCartPanel(){
+        if (!this.bMove){
+            this.setState({sCartPanel:Css['down'],bMask:false});
+        }
+    }
+
     getReco(){
             request(config.proxyBaseUrl+"/api/userinfos/queryID?token="+config.token,"post",{uid:Recfriend.data}).then(res=>{
                 if (res.code ===200){
@@ -111,7 +125,7 @@ class IndexComponent extends React.Component{
                 {true?(
                     <div className={Css['page']}>
                          <div className={this.state.bScroll?Css['search-header']+" "+Css["red-bg"]:Css['search-header']+" "+Css["red-bg"]}>
-                              <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "home/my")}>
+                              <div className={Css['classify-icon']} onClick={this.showCartPanel.bind(this)}>
                                 <FontAwesomeIcon size="lg" icon={faPlusCircle} />
                     </div>
 
@@ -152,13 +166,13 @@ class IndexComponent extends React.Component{
                 </div>
                </div>
 
-        <div ref="mask" className={false?Css['mask']:Css['mask']+" hide"}></div>
-            <div ref="cart-panel" className={Css['cart-panel']+" "+Css['up']}>
+        <div ref="mask" className={this.state.bMask?Css['mask']:Css['mask']+" hide"}></div>
+            <div ref="cart-panel" className={Css['cart-panel']+" "+this.state.sCartPanel}>
             <div ref="goods-info" className={Css['goods-info']}>
             <div className={Css['close-panel-wrap']}>
             <div className={Css['spot']}></div>
             <div className={Css["line"]}></div>
-            <div className={Css['close']}></div>
+            <div className={Css['close']} onClick={this.hideCartPanel.bind(this)}></div>
             </div>
 
         </div>
