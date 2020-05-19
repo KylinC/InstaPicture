@@ -8,7 +8,7 @@ import {lazyImg,setScrollTop} from '../../../assets/js/utils/util.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faList, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import {faList, faUserCircle, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 
 import WeiBoList from './contentPage/WeiBoList.js' ;
 import Recitem from './data/item.json';
