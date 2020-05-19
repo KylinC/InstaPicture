@@ -1,8 +1,8 @@
 body{
   /*边界看宽度默认为8,在这里初始值设为零*/
   margin: 0;
-  font-family: 楷体;
-  color:rgb(89, 10, 134);
+  font-family: Georgia;
+  color:rgb(0, 0, 0);
 }
 /* 标题 */
 .header {

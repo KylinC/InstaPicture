@@ -69,7 +69,7 @@ class  ModpwdIndex extends React.Component{
                     <div className={Css['input-wrap']} style={{marginTop:'0.3rem'}}>
                         <input type={this.state.sType} placeholder="请输入不小于6位的密码" onChange={(e)=>{this.setState({sPassword:e.target.value})}} className={Css['password']} />
                         <div className={Css['switch-wrap']}>
-                            <Switch color="#EB1625" checked={this.state.checked} onClick={this.changePwd.bind(this,!this.state.checked)}></Switch>
+                            <Switch color="rgba(0,0,0,0.5)" checked={this.state.checked} onClick={this.changePwd.bind(this,!this.state.checked)}></Switch>
                         </div>
                     </div>
                     <div className={Css['save-btn']} onClick={this.submitData.bind(this)}>提交</div>

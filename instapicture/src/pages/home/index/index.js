@@ -163,27 +163,30 @@ class IndexComponent extends React.Component{
                {this.state.sRecitem!=undefined?  <WeiBoList data={this.state.sRecitem} />:''}
                </div>
                 <div className={styles.footer}>
-                    meet what you want
+                     dreamed a dream in times gone by.
                 </div>
                </div>
 
-        <div ref="mask" className={this.state.bMask?Css['mask']:Css['mask']+" hide"}></div>
-            <div ref="cart-panel" className={Css['cart-panel']+" "+this.state.sCartPanel}>
-            <div ref="goods-info" className={Css['goods-info']}>
-            <div className={Css['close-panel-wrap']}>
-            <div className={Css['close']} onClick={this.hideCartPanel.bind(this)}></div>
-            </div>
-
-        </div>
-        <div className={Css['attr-wrap']}>
-
-            </div>
-            <div className={Css['amount-wrap']}>
-
-            </div>
-            <div className={Css['sure-btn']}>发布</div>
-            </div>
-
+            <div ref="mask" className={this.state.bMask?Css['mask']:Css['mask']+" hide"}></div>
+                <div ref="cart-panel" className={Css['cart-panel']+" "+this.state.sCartPanel}>
+                <div ref="goods-info" className={Css['goods-info']}>
+                    <div className={Css['close-panel-wrap']}>
+                    <div className={Css['close']} onClick={this.hideCartPanel.bind(this)}></div>
+                    </div>
+                </div>
+                <div className={Css['attr-wrap']}>
+                    <div className={Css['main']}>
+                        <ul className={Css['head']}>
+                        <li></li>
+                        <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-04-29-%E6%88%AA%E5%B1%8F2020-04-29%20%E4%B8%8B%E5%8D%888.29.00.png"} alt=""/><input ref="headfile" type="file" /></li>
+                        </ul>
+                    </div>
+                </div>
+                <div className={Css['amount-wrap']}>
+                    <input />
+                </div>
+                <div className={Css['sure-btn']}>发布</div>
+                </div>
             </div>
              
          

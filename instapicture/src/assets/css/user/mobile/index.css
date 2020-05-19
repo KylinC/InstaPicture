@@ -7,5 +7,5 @@
 .main .input-wrap .cellphone{width:93%;height:90%;font-size:0.28rem;margin-left:0.2rem;margin-top:0.05rem;}
 .main .input-wrap .code{width:69%;height:90%;font-size:0.28rem;margin-left:0.2rem;margin-top:0.05rem;float:left;}
 .main .input-wrap .code-btn{width:27%;height:100%;border-left:#EFEFEF 1px solid;float:left;font-size:0.28rem;color:#717376;text-align:center;line-height:0.8rem;}
-.main .input-wrap .code-btn.success{color:#EB1625}
-.main .save-btn{width:93%;height:0.8rem;background-color:#E42321;font-size:0.28rem;color:#FFFFFF;text-align:center;line-height:0.8rem;margin:0 auto;border-radius: 4px;margin-top:0.2rem;}
+.main .input-wrap .code-btn.success{color:rgba(0,0,0,0.5)}
+.main .save-btn{width:93%;height:0.8rem;background-color:rgba(0,0,0,0.5);font-size:0.28rem;color:#FFFFFF;text-align:center;line-height:0.8rem;margin:0 auto;border-radius: 4px;margin-top:0.2rem;}

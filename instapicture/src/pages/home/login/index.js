@@ -28,8 +28,6 @@ class LoginIndex extends React.Component{
 
     //点击登录按钮
     submitData(){
-        console.log(this.state.sPassword);
-        console.log(this.state.sCellphone);
         if(this.state.sCellphone.match(/^\s*$/)){
             Toast.info("请输入您的手机号",2);
             return false;
@@ -83,7 +81,7 @@ class LoginIndex extends React.Component{
                     <div className={Css['password-wrap']}>
                         <div className={Css['password']}><input type={this.state.sType} placeholder="密码" onChange={(e)=>{this.setState({sPassword:e.target.value})}} /></div>
                         <div className={Css['switch-wrap']}>
-                            <Switch color="#B15BFF" checked={this.state.checked} onClick={this.changePwd.bind(this,!this.state.checked)}></Switch>
+                            <Switch color="rgb(0,0,0)" checked={this.state.checked} onClick={this.changePwd.bind(this,!this.state.checked)}></Switch>
                         </div>
                     </div>
                     <div className={Css['sure-btn']} onClick={this.submitData.bind(this)}>登录</div>
