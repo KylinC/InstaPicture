@@ -8,7 +8,7 @@ import {lazyImg,setScrollTop} from '../../../assets/js/utils/util.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faList, faUserCircle,faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import {faList, faUserCircle} from '@fortawesome/free-solid-svg-icons'
 
 import WeiBoList from './contentPage/WeiBoList.js' ;
 import Recitem from './data/item.json';
@@ -42,7 +42,7 @@ class IndexComponent extends React.Component{
     //         //监听的事件回调,必须设为true,否则事件无法监听
     //          onStartShouldSetPanResponder: () => true,
     //          onMoveShouldSetPanResponder: ()=> true,
-  
+
     //          onPanResponderMove: (evt,gs)=>{
     //              //可自定义滑动距离
     //              if (gs.dy >= 220){
@@ -50,9 +50,9 @@ class IndexComponent extends React.Component{
     //                      isFresh:true,
     //                  })
     //              }
-  
+
     //          },
-  
+
     //          onPanResponderRelease:() => {
     //            if (this.state.isFresh){
     //                Alert.alert("大于等于220")
@@ -62,7 +62,7 @@ class IndexComponent extends React.Component{
     //                })
     //            }
     //          },
-  
+
     //      });
     //    if(this.state.isFresh){
     //        this.pushPage.bind(this,"home/index")
@@ -74,7 +74,7 @@ class IndexComponent extends React.Component{
         this.setState=(state,callback)=>{
             return;
         };
-       
+
     }
     eventScroll(){
         if (this.bScroll) {
@@ -120,9 +120,10 @@ class IndexComponent extends React.Component{
     }
     
     render(){
+        
         return(
             <div>
-                {true?(
+                {this.state.bScroll?(
                     <div className={Css['page']}>
                          <div className={this.state.bScroll?Css['search-header']+" "+Css["red-bg"]:Css['search-header']+" "+Css["red-bg"]}>
                               <div className={Css['classify-icon']} onClick={this.showCartPanel.bind(this)}>
@@ -144,7 +145,7 @@ class IndexComponent extends React.Component{
                     <div className={Css['nickname']}>InstaPicture</div>
                     <div className={Css['points']}>welcome</div>
                 </div>
-               
+
                 <div className={styles.item}>
                  <div className={styles.part}>
                     可能感兴趣的陌生人
@@ -186,6 +187,8 @@ class IndexComponent extends React.Component{
             </div>
 
             </div>
+             
+         
             
         );
     }
