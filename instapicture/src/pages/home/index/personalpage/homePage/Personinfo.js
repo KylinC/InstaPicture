@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import styles from '../css/ListItemStyle.css' ;
+import styles from '../../css/ListItemStyle.css' ;
 
 
 
@@ -28,9 +28,9 @@ export default class Person extends Component {
     return(
       <div className={styles.item}>
 
-        <div className={styles.demo}>
+        <div className={styles.demo2}>
           <p className={styles.isolation}>
-              头像：<img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={datas.head} className={styles.imgStyle}></img>
+              头像：<img src={require("../../../../../assets/images/common/lazyImg.jpg")} data-echo={datas.head} className={styles.imgStyle}></img>
           </p>
           <p className={styles.isolation}>
               ID：{datas.uid}

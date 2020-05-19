@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import {connect} from "react-redux";
 import config from '../../../../assets/js/conf/config.js';
 import {safeAuth,lazyImg} from '../../../../assets/js/utils/util.js';
 import UpRefresh from '../../../../assets/js/libs/uprefresh.js';
@@ -32,11 +33,12 @@ function getCurrentFormatDate() {
 /**
  * 评论组件
  */
-export default class CommentForm extends Component {
+class CommentForm extends Component {
 
 
   constructor(props) {
     super(props);
+    safeAuth(props);
     this.state =  {
       //默认回复内容为空
       replycontents:[]
@@ -47,12 +49,14 @@ export default class CommentForm extends Component {
   }
   getReco(){
     var com=[];
-    for(var i = 0, len = this.props.itemdata.length; i < len; i++){
+    if(this.props.itemdata!=undefined){
+      for(var i = 0, len = this.props.itemdata.length; i < len; i++){
         request(config.proxyBaseUrl+"/api/comments/queryID?token="+config.token,"post",{uid: this.props.itemdata[i]}).then(res=>{
             if (res.code ===200){
                  com.push(res.data);
             }
         } )
+    };
     };
     this.setState({replycontents:com});
   }
@@ -93,9 +97,9 @@ export default class CommentForm extends Component {
         return ;
       }
       let newContent = {
-        content:recontent,
-        name:'军军',
-        time:currentTime,
+        CommentUserID:this.props.state.user.uid,
+        CommentText:recontent,
+        Time:currentTime,
       }
       //取得老的回复内容
       let oldRepContent = this.state.replycontents,
@@ -105,7 +109,37 @@ export default class CommentForm extends Component {
       this.setState({
           replycontents:newRplContent,
       });
-      //轻空输入框内容
+      //清空输入框内容
       this.refs.content.value = "";
+
+      var date = new Date() ;
+      let Cid=Number(date)+Number(this.props.itemid)+Number(this.props.state.user.uid);
+      let sUrl1=config.proxyBaseUrl+"/api/comments/give_comment?token="+config.token;
+      request(sUrl1, "post",{comid:Cid,itemid:this.props.itemid,userid:this.props.state.user.uid,content:recontent,time:currentTime}).then(res=>{
+          if (res.code ===200){
+              console.log("comment sumbmi to db")
+          }
+      });
+      let sUrl2=config.proxyBaseUrl+"/api/items/updateComment?token="+config.token;
+      request(sUrl2, "post",{uid:this.props.itemid,commentnum:parseInt(this.props.comnum)+1}).then(res=>{
+        if (res.code ===200){
+            console.log("comment sumbmit to Items")
+        }
+      });
+      var new_list=[String];
+      new_list=this.props.clist;
+      new_list.push(Cid);
+      console.log(new_list);
+      let sUrl3=config.proxyBaseUrl+"/api/items/updateComment2?token="+config.token;
+      request(sUrl3, "post",{uid:this.props.itemid,CList:new_list}).then(res=>{
+        if (res.code ===200){
+            console.log("comment list sumbmit to Items")
+        }
+      });
   }
 }
+export default connect((state)=>{
+  return{
+      state:state
+  }
+})(CommentForm)

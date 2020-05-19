@@ -40,7 +40,7 @@ export default class CommentReplyList extends Component {
             <div className={styles.commentContentStyle}>
               <div className={styles.nickNameStyle}>
                 <span>{this.state.name}</span>
-                <span>{this.props.reply.Text}</span>
+                <span>{this.props.reply.CommentText}</span>
               </div>
               <span className={styles.timeSize}>{this.props.reply.Time}</span>
             </div>

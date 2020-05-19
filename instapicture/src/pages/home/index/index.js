@@ -1,4 +1,5 @@
 import React from 'react';
+//import { PanResponder,Alert} from "react-native";
 import Swiper from '../../../assets/js/libs/swiper.min.js';
 import config from '../../../assets/js/conf/config.js';
 import {request} from '../../../assets/js/libs/request.js';
@@ -6,7 +7,6 @@ import {connect} from "react-redux";
 import {lazyImg,setScrollTop} from '../../../assets/js/utils/util.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faList, faUserCircle} from '@fortawesome/free-solid-svg-icons'
 
@@ -25,6 +25,7 @@ class IndexComponent extends React.Component{
             sRecfriend:[],
             sRecitem:[],
             bScroll:false,
+            isFresh:false,
             pageStyle:{display:"none"}
         }
         this.bScroll=true;
@@ -35,15 +36,43 @@ class IndexComponent extends React.Component{
         this.getReco();
         setScrollTop(global.scrollTop.index);
         window.addEventListener("scroll",this.eventScroll.bind(this),false);
-       
-       
+    //     this._panResponder = PanResponder.create({
+    //         //监听的事件回调,必须设为true,否则事件无法监听
+    //          onStartShouldSetPanResponder: () => true,
+    //          onMoveShouldSetPanResponder: ()=> true,
+  
+    //          onPanResponderMove: (evt,gs)=>{
+    //              //可自定义滑动距离
+    //              if (gs.dy >= 220){
+    //                  this.setState({
+    //                      isFresh:true,
+    //                  })
+    //              }
+  
+    //          },
+  
+    //          onPanResponderRelease:() => {
+    //            if (this.state.isFresh){
+    //                Alert.alert("大于等于220")
+    //                this.setState({
+    //               //需置为false,否则就失去了监听的效果
+    //               isFresh:false,
+    //                })
+    //            }
+    //          },
+  
+    //      });
+    //    if(this.state.isFresh){
+    //        this.pushPage.bind(this,"home/index")
+    //    }
     }
     componentWillUnmount(){
         this.bScroll=false;
         window.removeEventListener("scroll",this.eventScroll.bind(this));
         this.setState=(state,callback)=>{
             return;
-        }
+        };
+       
     }
     eventScroll(){
         if (this.bScroll) {
@@ -62,31 +91,21 @@ class IndexComponent extends React.Component{
     }
 
     getReco(){
-        for(var i = 0, len = Recfriend.data.length; i < len; i++){
-            request(config.proxyBaseUrl+"/api/userinfos/queryinfo?token="+config.token,"post",{uid: Recfriend.data[i]}).then(res=>{
+            request(config.proxyBaseUrl+"/api/userinfos/queryID?token="+config.token,"post",{uid:Recfriend.data}).then(res=>{
                 if (res.code ===200){
-                     this.friend.push(res.data);
+                    this.setState({sRecfriend:res.data},()=>{
+                    });
                 }
-            } )
-        };
-        for(var i = 0, len = Recitem.data.length; i < len; i++){
-            request(config.proxyBaseUrl+"/api/items/queryID?token="+config.token,"post",{uid: Recitem.data[i]}).then(res=>{
+            } );
+            request(config.proxyBaseUrl+"/api/items/queryID?token="+config.token,"post",{uid: Recitem.data}).then(res=>{
                 if (res.code ===200){
-                     this.items.push(res.data);
+                    this.setState({sRecitem:res.data},()=>{
+                    });
                 }
-            } )
-        };
-        this.setState({sRecfriend:this.friend},()=>{
-            console.log(this.state.sRecfriend);
-        });
-        this.setState({sRecitem:this.items},()=>{
-            console.log(this.state.sRecitem);
-        });
-        
+            } );
     }
     
     render(){
-        
         return(
             <div>
                 {this.state.bScroll?(
@@ -107,26 +126,31 @@ class IndexComponent extends React.Component{
                  </div>
                 ):(null)}
                 <div>
-                <div className={styles.header}>
-                    <h1>InstaPicture</h1>
-                    <p>welcome</p>
+                <div className={Css['user-info-wrap']}>
+                    <div className={Css['nickname']}>InstaPicture</div>
+                    <div className={Css['points']}>welcome</div>
                 </div>
+               
                 <div className={styles.item}>
                  <div className={styles.part}>
                     可能感兴趣的陌生人
                 </div>
                </div>
-               <FriendList data={this.state.sRecfriend} />
+               <div className={styles.item}>
+               {this.state.sRecfriend!=undefined? <FriendList data={this.state.sRecfriend} />:''}
+               </div>
                 <div className={styles.item}>
                  <div className={styles.part}>
                     可能感兴趣的内容
                 </div>
                </div>
-                <WeiBoList data={this.state.sRecitem} />
+               <div className={styles.item}>
+               {this.state.sRecitem!=undefined?  <WeiBoList data={this.state.sRecitem} />:''}
+               </div>
                 <div className={styles.footer}>
                     meet what you want
                 </div>
-            </div>
+               </div>
               
             </div>
              

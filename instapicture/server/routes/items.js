@@ -8,7 +8,7 @@ var Model=require('../models/items');
 mongoose.connect('mongodb://127.0.0.1:27017/picturebase');//design是数据库名
 
 // mount (disconnected,error)
-mongoose.connection.on('connected',function(){
+mongoose.connection.on('connected',function( c ){
     // console.log('connected');
 });
 
@@ -28,7 +28,54 @@ router.post('/',function(req,res,next){
         }
     })
 })
-
+router.post('/updateitem/',function(req,res,next){
+    // update in mongoose
+    Model.updateOne({ItemID: req.body.uid},{ProsNum: req.body.prosnum, ConsNum:req.body.consnum, CommentNum:req.body.commentnum},function (err,doc) {
+        if(err)
+        {
+            console.log(err)
+            return
+        }
+        res.json({
+            status:1,
+            code: 200,
+            data:"修改成功"
+        })
+    })
+})
+router.post('/updateComment/',function(req,res,next){
+    // update in mongoose
+    Model.updateOne({ItemID: req.body.uid},{CommentNum:req.body.commentnum},function (err,doc) {
+        if(err)
+        {
+            console.log(err)
+            return
+        }
+        res.json({
+            status:1,
+            code: 200,
+            data:"修改成功"
+        })
+    })
+})
+router.post('/updateComment2/',function(req,res,next){
+    // update in mongoose
+    var array=[String];
+    array=req.body.CList.split(',');
+    Model.updateOne({ItemID: req.body.uid},{CommentIDList:array},function (err,doc) {
+        if(err)
+        {
+            console.log(err)
+            return
+        }
+        console.log(array);
+        res.json({
+            status:1,
+            code: 200,
+            data:"修改成功"
+        })
+    })
+})
 router.post('/queryinfo/',function(req,res,next){
     Model.find({OwnerID:req.body.uid},function(err,docs){
         console.log(req.body.uid);
@@ -48,8 +95,9 @@ router.post('/queryinfo/',function(req,res,next){
     })
 })
 router.post('/queryID/',function(req,res,next){
-    Model.find({ItemID:req.body.uid},function(err,docs){
-        console.log(req.body.uid);
+    var array=[String];
+    array=req.body.uid.split(',');
+    Model.find({ItemID:{$in:array}},function(err,docs){
         console.log(docs);
         if(err){
             res.json({
@@ -57,27 +105,11 @@ router.post('/queryID/',function(req,res,next){
                 data:null
             })
         }else{
-            if(docs.length===1){
                 res.json({
                     status:1,
                     code:200,
-                    data:{
-                        ownerID:docs[0].OwnerID,
-                        text:docs[0].Text,
-                        imageID:docs[0].ImageID,
-                        prosNum:docs[0].ProsNum,
-                        consNum:docs[0].ConsNum,
-                        commentNum:docs[0].CommentNum,
-                        commentIDList:docs[0].CommentIDList
-                    }
+                    data:docs
                 })
-            }
-            else{
-                res.json({
-                    success:'query fail',
-                    data:null
-                })
-            }
         }
     })
 })

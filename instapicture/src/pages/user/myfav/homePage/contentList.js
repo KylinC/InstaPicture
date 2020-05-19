@@ -23,10 +23,12 @@ export default class ContentList extends Component {
   }
 componentDidMount(){
     this.getReco();
+    console.log('6');
 }
 getReco(){
     request(config.proxyBaseUrl+"/api/images/queryinfo?token="+config.token,"post",{uid:this.props.itemData.ImageID}).then(res=>{
-        if (res.code ===200){
+      console.log('7');  
+      if (res.code ===200){
             this.setState({storagepath:res.data},()=>{
                 lazyImg();
             })

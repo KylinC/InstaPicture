@@ -17,10 +17,10 @@ class HomeComponent extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            bHomeStyle:true,
+            bHomeStyle:false,
             bCartStyle:false,
             bAlbumStyle:false,
-            bMyStyle:false,
+            bMyStyle:true,
             activeColor:"#B15BFF",
             noneActiveColor:"#000000"
         }

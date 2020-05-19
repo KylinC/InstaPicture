@@ -27,6 +27,7 @@ class  MyFav extends React.Component{
     }
     componentDidMount(){
         this.getReco();
+       
     }
     componentWillUnmount(){
         this.oUpRefresh=null;
@@ -51,7 +52,7 @@ class  MyFav extends React.Component{
                     lazyImg();
                 })
             }
-        } )
+        } );
 
     }
     render(){
@@ -59,8 +60,9 @@ class  MyFav extends React.Component{
             <div>
                 <div className={Css['page']}>   
                 <SubHeaderComponent title="我的主页"></SubHeaderComponent>
-                <div className={styles.header}>
-                    <h1>InstaPicture</h1>
+                <div className={Css['user-info-wrap']}>
+                    <div className={Css['nickname']}>InstaPicture</div>
+                    <div className={Css['points']}>welcome</div>
                 </div>
                <Person data={this.state.myinfo}/>
                <Content data={this.state.mycontent}/>
