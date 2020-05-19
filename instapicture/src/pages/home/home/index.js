@@ -21,8 +21,8 @@ class HomeComponent extends React.Component{
             bCartStyle:false,
             bAlbumStyle:false,
             bMyStyle:true,
-            activeColor:"#B15BFF",
-            noneActiveColor:"#000000"
+            activeColor:"rgba(0,0,0,1)",
+            noneActiveColor:"rgba(0,0,0,0.2)"
         }
     }
     componentWillMount(){

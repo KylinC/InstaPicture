@@ -171,8 +171,6 @@ class IndexComponent extends React.Component{
             <div ref="cart-panel" className={Css['cart-panel']+" "+this.state.sCartPanel}>
             <div ref="goods-info" className={Css['goods-info']}>
             <div className={Css['close-panel-wrap']}>
-            <div className={Css['spot']}></div>
-            <div className={Css["line"]}></div>
             <div className={Css['close']} onClick={this.hideCartPanel.bind(this)}></div>
             </div>
 

@@ -113,18 +113,18 @@ body{
  .part{
   width:100%;
 	height:24px;
-	border:2px solid rgb(151, 123, 130);
-  background-image:url("../../../../assets/images/user/my/mybg1.jpg");
-  color: rgb(245, 234, 244);
+	border:3px solid rgba(0, 0, 0,0.3);
+  background-image:url("../../../../assets/images/user/my/images2.jpg");
+  color: rgb(0, 0, 0);
  }
  .part{
   border-radius: 30px 30px;
  }
  .part{
-  border-top-left-radius: 30px;
+  border-top-left-radius: 10px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
-  border-bottom-left-radius: 30px;
+  border-bottom-left-radius: 10px;
  }
  .littlepart{
   width:100%;
