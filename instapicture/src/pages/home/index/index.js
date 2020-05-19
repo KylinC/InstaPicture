@@ -8,7 +8,7 @@ import {lazyImg,setScrollTop} from '../../../assets/js/utils/util.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faList, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import {faList, faUserCircle,faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 
 import WeiBoList from './contentPage/WeiBoList.js' ;
 import Recitem from './data/item.json';
@@ -108,11 +108,11 @@ class IndexComponent extends React.Component{
     render(){
         return(
             <div>
-                {this.state.bScroll?(
+                {true?(
                     <div className={Css['page']}>
                          <div className={this.state.bScroll?Css['search-header']+" "+Css["red-bg"]:Css['search-header']+" "+Css["red-bg"]}>
-                              <div className={Css['classify-icon']}>
-                                <FontAwesomeIcon size="lg" icon={faList} />
+                              <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "home/my")}>
+                                <FontAwesomeIcon size="lg" icon={faPlusCircle} />
                     </div>
 
                     <div className={Css['login-wrap']}>
