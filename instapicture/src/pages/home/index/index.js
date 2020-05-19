@@ -9,6 +9,7 @@ import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faList, faUserCircle, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import imgURL from '../../../assets/images/home/index/ins-title.png';
 
 import WeiBoList from './contentPage/WeiBoList.js' ;
 import Recitem from './data/item.json';
@@ -123,7 +124,7 @@ class IndexComponent extends React.Component{
         
         return(
             <div>
-                {this.state.bScroll?(
+                {true?(
                     <div className={Css['page']}>
                          <div className={this.state.bScroll?Css['search-header']+" "+Css["red-bg"]:Css['search-header']+" "+Css["red-bg"]}>
                               <div className={Css['classify-icon']} onClick={this.showCartPanel.bind(this)}>
@@ -142,8 +143,7 @@ class IndexComponent extends React.Component{
                 ):(null)}
                 <div>
                 <div className={Css['user-info-wrap']}>
-                    <div className={Css['nickname']}>InstaPicture</div>
-                    <div className={Css['points']}>welcome</div>
+                    <div className={Css['head']}><img className={Css['im-title']} src={imgURL} /></div>
                 </div>
 
                 <div className={styles.item}>
