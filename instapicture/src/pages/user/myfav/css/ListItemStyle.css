@@ -84,7 +84,7 @@ body{
 	width:100%;
 	height:180px;
 	border:2px solid rgb(160, 139, 144);
-	background:#CCC;
+	background-image:url("../../../../assets/images/home/index/background1.jpg");
 }
 .demo{
   border-radius: 30px 30px;
@@ -99,7 +99,8 @@ body{
   width:100%;
 	height:24px;
 	border:2px solid rgb(151, 123, 130);
-	background:#CCC;
+	background-image:url("../../../../assets/images/user/my/mybg1.jpg");
+  color: rgb(245, 234, 244);
  }
  .part{
   border-radius: 30px 30px;

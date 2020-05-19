@@ -59,7 +59,29 @@ router.post('/queryID/',function(req,res,next){
         }
     })
 })
-
+router.post('/give_comment/',function(req,res,next){
+    var comment=new Model({
+        CommentID:req.body.comid,
+        ItemID:req.body.itemid,
+        CommentUserID:req.body.userid,
+        CommentText:req.body.content,
+        Time:req.body.time
+    });
+    comment.save(function (err) {
+     if (err) { 
+          res.json({
+          success:'fail',
+          data:null })
+      }else{
+         res.json({
+             status:1,
+             code:200,
+             data: '1'
+         })
+      }
+     });
+     console.log(comment);
+ })
 
 module.exports=router;
 

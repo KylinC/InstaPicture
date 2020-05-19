@@ -2,13 +2,14 @@ body{
   /*边界看宽度默认为8,在这里初始值设为零*/
   margin: 0;
   font-family: 楷体;
+  color:rgb(89, 10, 134);
 }
 /* 标题 */
 .header {
-  padding: 20px;
+  padding: 50px;
   text-align: center;
   background: #1abc9c;
-  color: white;
+  color: rgb(243, 134, 228);
 }
 
 /* 标题字体加大 */
@@ -83,7 +84,7 @@ body{
 	width:100%;
 	height:250px;
 	border:2px solid rgb(160, 139, 144);
-	background:#CCC;
+	background-image:url("../../../../assets/images/home/index/back.jpg");
 }
 .demo{
   border-radius: 30px 30px;
@@ -94,11 +95,27 @@ body{
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
  }
+ .demo2{
+	width:100%;
+	height:180px;
+	border:2px solid rgb(160, 139, 144);
+	background-image:url("../../../../assets/images/home/index/background1.jpg");
+}
+.demo2{
+  border-radius: 30px 30px;
+  }
+.demo2{
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+ }
  .part{
   width:100%;
 	height:24px;
 	border:2px solid rgb(151, 123, 130);
-	background:#CCC;
+  background-image:url("../../../../assets/images/user/my/mybg1.jpg");
+  color: rgb(245, 234, 244);
  }
  .part{
   border-radius: 30px 30px;
@@ -110,11 +127,11 @@ body{
   border-bottom-left-radius: 30px;
  }
  .littlepart{
-  width:85%;
+  width:100%;
   height:40px;
   margin-bottom: 10px;
 	border:2px solid rgb(151, 123, 130);
-	background:rgb(198, 231, 216);
+	background-image:url("../../../../assets/images/home/index/background1.jpg");
  }
  .littlepart{
   border-radius: 0px 0px;
@@ -162,5 +179,9 @@ body{
   text-align: center;
   width: 100%;
   margin-left: 1px;
-  margin-right: 40px;
+  margin-right: 8px;
 }
+.isolation{
+  padding: 7px;
+}
+

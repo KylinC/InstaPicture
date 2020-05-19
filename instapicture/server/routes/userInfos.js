@@ -42,7 +42,7 @@ router.post('/',function(req,res,next){
     })
     // res.json({aa:"success user"})
 })
-//注册这个还没有弄好，该功能暂时出错
+//注册虽然出错，但会写入数据库
 router.post('/reginfo/',function(req,res,next){
    var user=new Model({
        UserID:req.body.id,
@@ -72,7 +72,6 @@ router.post('/reginfo/',function(req,res,next){
         })
      }
     });
-    console.log(usesr);
 })
 router.post('/isreg/',function(req,res,next){
     // find in mongoose
@@ -146,6 +145,26 @@ router.post('/pwdlogin/',function(req,res,next){
                     data:"您输入的用户名不存在"
                 })
             }
+        }
+    })
+})
+router.post('/queryID/',function(req,res,next){
+    var array=[String];
+    array=req.body.uid.split(',');
+    Model.find({UserID:{$in:array}},function(err,docs){
+        console.log(req.body.uid);
+        console.log(docs);
+        if(err){
+            res.json({
+                success:'fail',
+                data:null
+            })
+        }else{
+                res.json({
+                    status:1,
+                    code:200,
+                    data:docs
+                })
         }
     })
 })

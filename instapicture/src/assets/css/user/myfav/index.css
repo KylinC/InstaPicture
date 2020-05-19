@@ -7,3 +7,8 @@
 .main .goods-list .price{width:100%;font-size:0.8rem;color:#f93036;font-size:0.28rem;margin-top:0.2rem;}
 .main .goods-list .btn-wrap{width:100%;margin-top:0.2rem;display: flex;display:-webkit-flex;justify-content: space-between;-webkit-justify-content: space-between;}
 .main .goods-list .btn-wrap .btn{width:1.08rem;height:0.56rem;border:#f93036 1px solid;border-radius: 4px;font-size:0.28rem;color:#f93036;text-align: center;line-height:0.56rem;}
+
+.user-info-wrap{width:100%;height:4.4rem;background-image:url("../../../../assets/images/home/index/back.jpg");background-size:100%;background-repeat:no-repeat;margin-top:1.02rem;background-position: top;position: relative;z-index:1;}
+.user-info-wrap .head{width:1.2rem;height:1.2rem;position: absolute;text-align: center;}
+.user-info-wrap .nickname{width:auto;height:auto;white-space: nowrap;position:absolute;z-index:1;left:16%;bottom:35%;font-size: 40px;color:rgb(243, 171, 243);}
+.user-info-wrap .points{width:auto;height:auto;white-space: nowrap;position:absolute;z-index:1;left:40%;bottom:20%;font-size:23px;color:rgb(223, 190, 241);}
