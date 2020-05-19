@@ -151,10 +151,27 @@ class IndexComponent extends React.Component{
                     meet what you want
                 </div>
                </div>
-              
+
+        <div ref="mask" className={false?Css['mask']:Css['mask']+" hide"}></div>
+            <div ref="cart-panel" className={Css['cart-panel']+" "+Css['up']}>
+            <div ref="goods-info" className={Css['goods-info']}>
+            <div className={Css['close-panel-wrap']}>
+            <div className={Css['spot']}></div>
+            <div className={Css["line"]}></div>
+            <div className={Css['close']}></div>
             </div>
-             
-         
+
+        </div>
+        <div className={Css['attr-wrap']}>
+
+            </div>
+            <div className={Css['amount-wrap']}>
+
+            </div>
+            <div className={Css['sure-btn']}>发布</div>
+            </div>
+
+            </div>
             
         );
     }
