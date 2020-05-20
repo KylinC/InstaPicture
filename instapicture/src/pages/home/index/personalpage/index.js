@@ -7,6 +7,7 @@ import UpRefresh from '../../../../assets/js/libs/uprefresh.js';
 import {request} from '../../../../assets/js/libs/request.js';
 import SubHeaderComponent from '../../../../components/header/subheader';
 import Css from '../../../../assets/css/user/myfav/index.css';
+import imgURL from '../../../../assets/images/home/index/ins-title.png';
 import styles from '../css/ListItemStyle.css'
 import Content from './homePage/content.js';
 import Person from './homePage/Personinfo.js';
@@ -61,8 +62,7 @@ class  PersonalPage extends React.Component{
                 <div className={Css['page']}>   
                 <SubHeaderComponent title="她/他的主页"></SubHeaderComponent>
                 <div className={Css['user-info-wrap']}>
-                    <div className={Css['nickname']}>InstaPicture</div>
-                    <div className={Css['points']}>welcome</div>
+                    <div className={Css['head']}><img className={Css['im-title']} src={imgURL} /></div>
                 </div>
                <Person data={this.state.myinfo}/>
                <Content data={this.state.mycontent}/>
