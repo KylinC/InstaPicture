@@ -6,6 +6,7 @@ var logger = require('morgan');
 var ejs=require('ejs');
 
 // test
+var friendsRouter=require('./routes/friends');
 var imagesRouter=require('./routes/images');
 var userimfosRouter = require('./routes/userInfos');
 var indexRouter = require('./routes/index');
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // router definitions
 app.use('/', indexRouter);
 app.use('/api/images',imagesRouter);
+app.use('/api/friends',friendsRouter);
 app.use('/api/userinfos',userimfosRouter);
 app.use('/api/items',itemRouter);
 app.use('/api/comments',commentRouter);

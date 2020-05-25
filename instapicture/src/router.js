@@ -15,6 +15,8 @@ const UserMobileIndex=asyncComponents(()=>import('./pages/user/mobile/index'));
 const UserModpwdIndex=asyncComponents(()=>import('./pages/user/modpwd/index'));
 // const MyFav=asyncComponents(()=>import('./pages/user/myfav/index'));
 const Transfer=asyncComponents(()=>import('./pages/transfer/index'));
+const List=asyncComponents(()=>import('./pages/Friends/my'));
+const SearchFriends=asyncComponents(()=>import('./pages/Friends/search'));
 export default class RouterComponent extends React.Component{
     render(){
         return(
@@ -30,6 +32,8 @@ export default class RouterComponent extends React.Component{
                             <AuthRoute path={config.path+"user/mobile/index"} component={UserMobileIndex} ></AuthRoute>
                             <AuthRoute path={config.path+"user/modpwd/index"} component={UserModpwdIndex} ></AuthRoute>
                             {/*<AuthRoute path={config.path+"user/myfav/index"} component={MyFav} ></AuthRoute>*/}
+                            <Route path={config.path+"friends/my"} component={List} ></Route>
+                            <Route path={config.path+"friends/search"} component={SearchFriends} ></Route>
                             <Route path={config.path+"transfer"} component={Transfer} ></Route>
                             <Redirect to={config.path+"home/index"}></Redirect>
                         </Switch>
