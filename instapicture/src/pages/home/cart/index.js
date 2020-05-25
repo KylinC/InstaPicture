@@ -4,6 +4,8 @@ import config from '../../../assets/js/conf/config.js';
 import action from '../../../actions';
 import SubHeaderComponent from '../../../components/header/subheader';
 //import Css from '../../../assets/css/home/cart/index.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faUser, faUserCircle, faSearch} from '@fortawesome/free-solid-svg-icons'
 import Css from '../../../assets/css/user/my/index.css';
 class CartIndex extends React.Component{
     constructor(){
@@ -25,11 +27,11 @@ class CartIndex extends React.Component{
                 <div className={Css['user-info-wrap']}></div>
                 <div className={Css["menu-list-wrap"]}>
                     <ul onClick={this.pushPage.bind(this, 'friends/my')}>
-                        <li>我的关注</li>
+                        <li><FontAwesomeIcon size="lg" icon={faUser} />  我的关注</li>
                         <li></li>
                     </ul>
                     <ul onClick={this.pushPage.bind(this, 'friends/search')}>
-                        <li>搜索用户</li>
+                        <li><FontAwesomeIcon size="lg" icon={faSearch} />  搜索用户</li>
                         <li></li>
                     </ul>
                 </div>
