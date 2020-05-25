@@ -47,38 +47,28 @@ router.post('/',function(req,res,next){
     })
 })
 
-var findres=[];
 
 router.post('/my/',function(req,res,next){
     let findres=[];
+    let findresid=[];
     Model.find({FollowerID:req.body.uid},function(err,docs){
         for(var i=0;i<docs.length;i++){
-            let tmpID = docs[i].CelebrityID;
-            userModel.find({UserID:tmpID},function (err1,docs1) {
-                findres.push({Name:docs1[0].UserName,
-                    imgRoad:docs1[0].ProfileImagePath,
-                    tags:docs1[0].TagList
-                })
-            })
-
+            findresid.push(docs[i].CelebrityID);
         }
-    })
-
-    res.json({
-        success:'true',
-        code:200,
-        data:[
-            {
-                Name:"simon",
-                imgRoad:'1.jpg',
-                tags:['高尔夫球', '史宾格犬', '磁带播放机']
-            },
-            {
-                Name:"simon",
-                imgRoad:'1.jpg',
-                tags:['高尔夫球', '史宾格犬']
+        // console.log(findresid);
+        userModel.find({UserID:{$in:findresid}},function (err1,docs1) {
+            for(var i=0;i<docs1.length;i++){
+                findres.push({Name:docs1[i].UserName,
+                    imgRoad:docs1[i].ProfileImagePath,
+                    tags:docs1[i].TagList
+                })
             }
-        ]
+            res.json({
+                success:'true',
+                code:200,
+                data:findres
+            })
+        })
     })
 })
 

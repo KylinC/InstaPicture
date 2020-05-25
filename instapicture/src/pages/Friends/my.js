@@ -42,17 +42,17 @@ class List extends React.Component{
     }
 
     render(){
-        var ItemView = this.state.data.map(function(item,index) {
-            //return <FriendList itemData= {item} key = {index}/>
-            return <Friendslist Name={item.Name} imgRoad={item.imgRoad} tags={item.tags} key={index}/> 
-          });
+        var ItemView = this.state.data.map(function(item,index) {
+            //return <FriendList itemData= {item} key = {index}/>
+            return <Friendslist Name={item.Name} imgRoad={item.imgRoad} tags={item.tags} i={index} key={index}/>
+        });
         return(
-            
+
             <div>
                 <SubHeaderComponent title="我的关注" right-text="搜索" ></SubHeaderComponent>
                 {ItemView}
             </div>
-        
+
         )
     }
 }

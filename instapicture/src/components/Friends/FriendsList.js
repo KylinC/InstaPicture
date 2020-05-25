@@ -7,20 +7,38 @@ class FriendsList extends React.Component{
     }
 
     render(){
-        return(
-            <div className={Css["alert"]} >
-                <img src={require('./images/'+this.props.imgRoad)} onClick={()=>{alert("跳转到个人主页")}} 
-                    alt="" />
-                <label className="alert-heading">{this.props.Name}</label>        
-                <hr/>
-                <label>
-                    {this.props.tags.map((tag,index) =>
-                        (<span className={Css["badge"]} key={index}>{tag}</span>)
-                    )}
-                    {/* <button>+关注</button> */}
-                </label>
-            </div>
-        )
+        if(this.props.i===0){
+            return(
+                <div className={Css["alert_head"]} >
+                    <img src={this.props.imgRoad} onClick={()=>{alert("跳转到个人主页")}}
+                         alt="" />
+                    <label className="alert-heading">{this.props.Name}</label>
+
+                    <label>
+                        {this.props.tags.map((tag,index) =>
+                            (<span className={Css["badge"]} key={index}>{tag}</span>)
+                        )}
+                        {/* <button>+关注</button> */}
+                    </label>
+                </div>
+            )
+        }
+        else{
+            return(
+                <div className={Css["alert"]} >
+                    <img src={this.props.imgRoad} onClick={()=>{alert("跳转到个人主页")}}
+                         alt="" />
+                    <label className="alert-heading">{this.props.Name}</label>
+
+                    <label>
+                        {this.props.tags.map((tag,index) =>
+                            (<span className={Css["badge"]} key={index}>{tag}</span>)
+                        )}
+                        {/* <button>+关注</button> */}
+                    </label>
+                </div>
+            )
+        }
     }
 }
 

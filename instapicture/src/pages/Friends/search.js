@@ -1,6 +1,7 @@
 import React from 'react';
 import Css from '../../assets/css/home/friends/search.css';
 import Friendslist from '../../components/Friends/FriendsList';
+import SubHeaderComponent from '../../components/header/subheader';
 
 class Search extends React.Component{
     constructor(props){
@@ -11,6 +12,7 @@ class Search extends React.Component{
     render(){
         return (
             <div>
+                <SubHeaderComponent title="搜索用户"></SubHeaderComponent>
                 <div className={Css['contain']}>
                     <div className={Css["bar6"]}>
                         <form>
