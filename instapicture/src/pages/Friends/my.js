@@ -39,6 +39,9 @@ class List extends React.Component{
         //     console.log(res);
         // })
     }
+    pushPage(url){
+        this.props.history.push(config.path+url);
+    }
 
     render(){
         var ItemView = this.state.data.map(function(item,index) {
@@ -48,7 +51,7 @@ class List extends React.Component{
         return(
 
             <div>
-                <SubHeaderComponent title="我的关注" right-text="搜索" ></SubHeaderComponent>
+                <SubHeaderComponent title="我的关注" right-text="搜索" onClickRightBtn={()=>{this.pushPage.bind(this, 'friends/search');}} ></SubHeaderComponent>
                 {ItemView}
             </div>
 
