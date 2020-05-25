@@ -72,27 +72,25 @@ router.post('/my/',function(req,res,next){
     })
 })
 
-router.post('/my/',function(req,res,next){
-    let findres=[];
-    let findresid=[];
-    Model.find({FollowerID:req.body.uid},function(err,docs){
-        for(var i=0;i<docs.length;i++){
-            findresid.push(docs[i].CelebrityID);
+router.post('/search/',function(req,res,next){
+    userModel.find({UserName:req.body.uname},function(err,docs){
+        if(docs.length===0){
+            res.json({
+                success:'true',
+                code:201,
+                data:null
+            })
         }
-        // console.log(findresid);
-        userModel.find({UserID:{$in:findresid}},function (err1,docs1) {
-            for(var i=0;i<docs1.length;i++){
-                findres.push({Name:docs1[i].UserName,
-                    imgRoad:docs1[i].ProfileImagePath,
-                    tags:docs1[i].TagList
-                })
-            }
+        else{
             res.json({
                 success:'true',
                 code:200,
-                data:findres
+                data:[{Name:docs[0].UserName,
+                    imgRoad:docs[0].ProfileImagePath,
+                    tags:docs[0].TagList
+                }]
             })
-        })
+        }
     })
 })
 

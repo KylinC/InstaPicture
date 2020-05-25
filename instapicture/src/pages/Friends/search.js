@@ -43,15 +43,15 @@ class Search extends React.Component{
     getSearch(){
         console.log(this.state.username);
 
-        let sUrl=config.proxyBaseUrl+"/api/friends/my/?token="+config.token;
-        request(sUrl, "post",{uid:this.props.state.user.uid}).then(res=>{
+        let sUrl=config.proxyBaseUrl+"/api/friends/search/?token="+config.token;
+        request(sUrl, "post",{uname:this.state.username}).then(res=>{
             // console.log("enter",res);
             if (res.code ===200){
                 this.setState({data:res.data},()=>{
                     console.log(this.state.data);
                 })
             }else{
-                Toast.info(res.data,2);
+                Toast.info("未寻找到好友信息",2);
             }
         });
     }
