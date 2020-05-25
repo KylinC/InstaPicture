@@ -113,7 +113,7 @@ router.post('/pwdlogin/',function(req,res,next){
         if(err){
             res.json({
                 success:'fail',
-                data:null
+                data:"数据库报错了"
             })
         }else{
             if(docs.length===1){

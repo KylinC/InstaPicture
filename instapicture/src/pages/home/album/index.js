@@ -44,14 +44,15 @@ class AlbumIndex extends React.Component{
     getReco(){
         request(config.proxyBaseUrl+"/api/images/album?token="+config.token,"post",{uid:this.props.state.user.uid}).then(res=>{
             if (res.code ===200){
+                console.log(res.data);
                 this.setState({aRecoGoods:res.data},()=>{
                     lazyImg();
                 })
             }
         } )
-        request( config.proxyBaseUrl+"/api/images?token=1",'post',{"aa":"bb"}).then(res=>{
-            console.log(res);
-        })
+        // request( config.proxyBaseUrl+"/api/images?token=1",'post',{"aa":"bb"}).then(res=>{
+        //     console.log(res);
+        // })
     }
     render(){
         return(
@@ -64,8 +65,9 @@ class AlbumIndex extends React.Component{
                                 this.state.aRecoGoods.map((item, index)=>{
                                     return (
                                         <div key={index} className={Css['reco-item']}>
-                                            <div className={Css['image']}><img src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.UploadTime} data-echo={item.storagePath} /></div>
-                                            <div className={Css['image-bottom']}><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-09-b0942619ab5f3d03ed2f71340d1385d5.png"}/></div>
+
+                                            <div className={Css['image']}><img src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.UploadTime} data-echo={"http://localhost/"+ item.StoragePath} /></div>
+                                            <div className={Css['image-bottom']}><img src={require("../../../assets/images/common/buttom.png")}/></div>
                                         </div>
                                     )
                                 })
