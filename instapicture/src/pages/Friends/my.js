@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 import  {Route,Switch}  from  'react-router-dom';
 import Friendslist from '../../../src/components/Friends/FriendsList';
 import asyncComponents from '../../components/async/AsyncComponent';
@@ -6,42 +7,38 @@ import config from '../../assets/js/conf/config.js';
 import {request} from '../../assets/js/libs/request.js';
 import Css from '../../assets/css/home/home/index.css';
 import SubHeaderComponent from '../../components/header/subheader';
+import action from "../../actions";
+import {Toast} from "antd-mobile";
 
 class List extends React.Component{
-
     constructor(props) {
         super(props);
         this.state={
             test:"111",
-            data:[
-                {
-                    Name:"simon",
-                    imgRoad:'1.jpg',
-                    tags:['高尔夫球', '史宾格犬', '磁带播放机']
-                },
-                {
-                    Name:"simon",
-                    imgRoad:'1.jpg',
-                    tags:['高尔夫球', '史宾格犬', '111']
-                }
-            ]
+            data:[]
         };
     }
 
     componentDidMount(){
         this.getFriends();
+        console.log(this.props.state.user.uid);
     }
 
     getFriends(){
-        // let sUrl=config.proxyBaseUrl+"/api/friends/my?token="+config.token;
-        // request(sUrl, "post",{})
-        // .then(function(res){
+        let sUrl=config.proxyBaseUrl+"/api/friends/my/?token="+config.token;
+        request(sUrl, "post",{uid:this.props.state.user.uid}).then(res=>{
+            // console.log("enter",res);
+            if (res.code ===200){
+                this.setState({data:res.data},()=>{
+                    console.log(this.state.data);
+                })
+            }else{
+                Toast.info(res.data,2);
+            }
+        });
+        // request( config.proxyBaseUrl+"/api/friends/?token=1",'post',{"aa":"bb"}).then(res=>{
         //     console.log(res);
         // })
-        fetch("http://localhost:9000/testAPI")
-            .then(res => res.json())
-            .then(res => console.log(res));
-            // .then(res => this.setState({test: res.data}));
     }
 
     render(){
@@ -59,5 +56,8 @@ class List extends React.Component{
         )
     }
 }
-
-export default List;
+export default connect((state)=>{
+    return{
+        state:state
+    }
+})(List)
