@@ -72,5 +72,29 @@ router.post('/my/',function(req,res,next){
     })
 })
 
+router.post('/my/',function(req,res,next){
+    let findres=[];
+    let findresid=[];
+    Model.find({FollowerID:req.body.uid},function(err,docs){
+        for(var i=0;i<docs.length;i++){
+            findresid.push(docs[i].CelebrityID);
+        }
+        // console.log(findresid);
+        userModel.find({UserID:{$in:findresid}},function (err1,docs1) {
+            for(var i=0;i<docs1.length;i++){
+                findres.push({Name:docs1[i].UserName,
+                    imgRoad:docs1[i].ProfileImagePath,
+                    tags:docs1[i].TagList
+                })
+            }
+            res.json({
+                success:'true',
+                code:200,
+                data:findres
+            })
+        })
+    })
+})
+
 module.exports=router;
 
