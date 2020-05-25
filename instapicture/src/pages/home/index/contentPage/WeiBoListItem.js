@@ -39,7 +39,6 @@ function getCurrentFormatDate() {
 class WeiBoListItem extends Component {
   constructor(props) {
     super(props);
-    safeAuth(props);
     this.state = {
       storagepath:'',
       figurepath:'',

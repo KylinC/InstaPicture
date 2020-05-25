@@ -37,8 +37,7 @@ class CommentForm extends Component {
 
 
   constructor(props) {
-    super(props);
-    safeAuth(props);
+    super();
     this.state =  {
       //默认回复内容为空
       replycontents:[]
