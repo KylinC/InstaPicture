@@ -31,6 +31,11 @@ class Search extends React.Component{
                     Name:"Morty",
                     imgRoad:'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-25-074422.jpg',
                     tags:['有点怂','青春期小孩']
+                },
+                {
+                    Name:"三楼的男票",
+                    imgRoad:'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-25-6e7f837cly1gexlxjwzzaj21d81d8amb.jpg',
+                    tags:['写代码太恶心了']
                 }
             ]
         }
