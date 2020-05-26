@@ -104,6 +104,28 @@ class IndexComponent extends React.Component{
             this.setState({sCartPanel:Css['down'],bMask:false});
         }
     }
+    uploadImg(){
+        let formData = new FormData();
+        formData.append('avatar', this.refs['imgfile'].files[0]);
+
+        let sUrl=config.proxyBaseUrl+"/api/userinfos/formdatahead";
+        // console.log(this.refs['headfile'].files[0]);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', config.proxyBaseUrl+"/api/userinfos/formdatahead");
+        xhr.onreadystatechange=()=>{
+            if(xhr.readyState == 4 && xhr.status == 200){
+                var res=eval('(' + xhr.responseText + ')');
+                if (res.code===200){
+                    // console("callback succ");
+                    this.setState({sHead:"http://kylinchen.xyz/"+res.data.generatename,sHeadName:res.data.originname});
+                }
+            }
+        }
+        xhr.onload = function() {
+            // console.log(xhr);
+        }
+        xhr.send(formData);
+    }
 
     getReco(){
             request(config.proxyBaseUrl+"/api/userinfos/queryID?token="+config.token,"post",{uid:Recfriend.data}).then(res=>{
@@ -178,7 +200,7 @@ class IndexComponent extends React.Component{
                     <div className={Css['main']}>
                         <ul className={Css['head']}>
                             <li></li>
-                            <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg"} alt=""/><input ref="headfile" type="file" /></li>
+                            <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg"} alt=""/><input ref="imgfile" type="file" onChange={this.uploadImg.bind(this)}/></li>
                         </ul>
                     </div>
                 </div>
