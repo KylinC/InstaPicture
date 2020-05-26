@@ -191,7 +191,8 @@ router.post('/queryinfo/',function(req,res,next){
                         nickname: docs[0].UserName,
                         points: "0",
                         uid: docs[0].UserID,
-                        utype: "0"
+                        utype: "0",
+                        tags:docs[0].TagList
                     }
                 })
             }
@@ -221,7 +222,11 @@ router.post('/safeout/',function(req,res,next){
 
 router.post('/updateuser/',function(req,res,next){
     // update in mongoose
-    Model.updateOne({UserID: req.body.uid},{UserName: req.body.nickname, ProfileImagePath:req.body.head, Gender:(req.body.gender==1)?"Male":"Female"},function (err,doc) {
+    var array=[String];
+    array=req.body.interest.split(',');
+    console.log(req.body.interest);
+    console.log(array);
+    Model.updateOne({UserID: req.body.uid},{UserName: req.body.nickname, TagList:array,ProfileImagePath:req.body.head, Gender:(req.body.gender==1)?"Male":"Female"},function (err,doc) {
         if(err)
         {
             console.log(err)

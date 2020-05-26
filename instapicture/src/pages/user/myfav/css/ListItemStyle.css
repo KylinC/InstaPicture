@@ -147,3 +147,16 @@ body{
 .isolation{
   padding: 7px;
 }
+.alert{
+  position: relative;
+  padding: auto;
+  border: 1px solid transparent;
+  border-radius: 0rem;
+  margin-top: 0.01rem;
+  margin-bottom: 0.02rem;
+  margin-right:0.02rem;
+  color: #080808;
+  background-color: #FFFFFF;
+  border-color: #080808;
+}
+

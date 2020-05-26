@@ -96,7 +96,7 @@ class WeiBoListItem extends Component {
           <div className={styles.nickNameAndSendTime}>
             <span>{this.state.name}</span> 
           </div>
-          <img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={this.state.storagepath} className={styles.fakeimg}></img>
+          <img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={"http://localhost/"+ this.state.storagepath} className={styles.fakeimg}></img>
           <p>{data.Text}</p>
         </div>
       </div>

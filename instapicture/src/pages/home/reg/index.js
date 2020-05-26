@@ -96,14 +96,9 @@ export default class RegIndex extends React.Component{
         var inter=[];
         for(var i = 0, len = this.state.hobby.length; i < len; i++){
             if(this.state.hobby[i].checked===true){
-                inter.push(1);
-            }else{
-                inter.push(0);
+                inter.push(this.state.hobby[i].title);
             }
         };
-        this.setState({
-            sInterest:inter
-        });
         let resData=await this.isSameCellphone();
         if(!this.state.sCellphone.match(/^1[0-9][0-9]{9}/)){
             Toast.info("您输入的手机号格式不正确",2);
@@ -127,7 +122,7 @@ export default class RegIndex extends React.Component{
             this.bSubmit=false;
             let sUrl=config.proxyBaseUrl+"/api/userinfos/reginfo?token="+config.token;
             console.log(sUrl);
-            request(sUrl, "post",{id:this.state.sID,nickname:this.state.sNickname, cellphone:this.state.sCellphone,password:this.state.sPassword,gender:this.state.sGender,interest:this.state.sInterest}).then(res=>{
+            request(sUrl, "post",{id:this.state.sID,nickname:this.state.sNickname, cellphone:this.state.sCellphone,password:this.state.sPassword,gender:this.state.sGender,interest:inter}).then(res=>{
                 console.log("bsumbmit",res)
                 if (res.code ===200){
                     this.props.history.goBack();

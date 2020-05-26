@@ -104,28 +104,6 @@ class IndexComponent extends React.Component{
             this.setState({sCartPanel:Css['down'],bMask:false});
         }
     }
-    uploadImg(){
-        let formData = new FormData();
-        formData.append('avatar', this.refs['imgfile'].files[0]);
-
-        let sUrl=config.proxyBaseUrl+"/api/userinfos/formdatahead";
-        // console.log(this.refs['headfile'].files[0]);
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', config.proxyBaseUrl+"/api/userinfos/formdatahead");
-        xhr.onreadystatechange=()=>{
-            if(xhr.readyState == 4 && xhr.status == 200){
-                var res=eval('(' + xhr.responseText + ')');
-                if (res.code===200){
-                    // console("callback succ");
-                    this.setState({sHead:"http://kylinchen.xyz/"+res.data.generatename,sHeadName:res.data.originname});
-                }
-            }
-        }
-        xhr.onload = function() {
-            // console.log(xhr);
-        }
-        xhr.send(formData);
-    }
 
     getReco(){
             request(config.proxyBaseUrl+"/api/userinfos/queryID?token="+config.token,"post",{uid:Recfriend.data}).then(res=>{
@@ -199,15 +177,15 @@ class IndexComponent extends React.Component{
                 <div className={Css['attr-wrap']}>
                     <div className={Css['main']}>
                         <ul className={Css['head']}>
-                            <li></li>
-                            <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg"} alt=""/><input ref="imgfile" type="file" onChange={this.uploadImg.bind(this)}/></li>
+                        <li></li>
+                        <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-04-29-%E6%88%AA%E5%B1%8F2020-04-29%20%E4%B8%8B%E5%8D%888.29.00.png"} alt=""/><input ref="headfile" type="file" /></li>
                         </ul>
                     </div>
                 </div>
                 <div className={Css['amount-wrap']}>
-                    <input className={Css['amount-name']} type="text" placeholder="输入你的评论吧！" />
+                    <input />
                 </div>
-                <div className={Css['sure-btn']} >发布</div>
+                <div className={Css['sure-btn']}>发布</div>
                 </div>
             </div>
              

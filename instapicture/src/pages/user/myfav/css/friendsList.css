@@ -1,0 +1,117 @@
+.alert{
+    position: relative;
+    padding: auto;
+    border: 1px solid transparent;
+    border-radius: 0rem;
+    margin-top: 0.01rem;
+    margin-bottom: 0.02rem;
+    margin-right:0.02rem;
+    color: #080808;
+    background-color: #FFFFFF;
+    
+}
+.alert img{
+    vertical-align: middle;
+    height: 60px;
+    width: 60px;
+    margin-top:8px;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    min-width: 60px;
+    border-radius: 50%;
+    background-position: -10px 0px;
+    background-size: cover;
+}
+.alert label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+    margin-top: 0px;
+    min-width: 10px;
+    color: inherit;     
+}
+.alert p{
+    display: inline-block;
+    min-width: 10px;
+}
+.alert hr {
+    display: inline-block;
+    border-top-color: #b1dfbb;
+  }
+
+.alert .badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+    color: #fff;
+    background-color: #3385ff;
+  }
+
+.alert_head{
+    position: relative;
+    padding: auto;
+    border: 1px solid transparent;
+    border-radius: 0rem;
+    margin-top: 1.02rem;
+    margin-bottom: 0.02rem;
+    margin-right:0.02rem;
+    color: #080808;
+    background-color: #FFFFFF;
+    border-color: #080808;
+}
+.alert_head img{
+    vertical-align: middle;
+    height: 60px;
+    width: 60px;
+    margin-top:8px;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    min-width: 60px;
+    border-radius: 50%;
+    background-position: -10px 0px;
+    background-size: cover;
+}
+.alert_head label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+    margin-top: 0px;
+    min-width: 10px;
+    color: inherit;     
+}
+.alert_head p{
+    display: inline-block;
+    min-width: 10px;
+}
+.alert_head hr {
+    display: inline-block;
+    border-top-color: #b1dfbb;
+  }
+
+.alert_head .badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+    color: #fff;
+    background-color: #3385ff;
+  }

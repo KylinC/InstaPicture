@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import styles from '../css/ListItemStyle.css' ;
-
+import Css from '../css/friendsList.css';
 
 
 //定义一个主页组件
@@ -9,13 +9,18 @@ export default class Person extends Component {
 
     constructor(props) {
       super(props);
+      this.state={
+        tags:this.props.data.tags
+      }
     }
-  
+    
     render() { 
         let datas=this.props.data;
+        console.log(datas.tags);
       return(
         <div>
                {this._renderHeadView(datas)}     
+               
         </div>
       ) ;
       
@@ -45,12 +50,20 @@ export default class Person extends Component {
               Cellphone：{datas.cellPhone}
           </p>
         </div>
-      
+                  
       </div>
      
     )
   }
-
+/*
+<div className={Css["alert"]} >
+                    <label>
+                        {datas.tags.map((tag,index) =>
+                            (<span className={Css["badge"]} key={index}>{tag}</span>)
+                        )}
+                        </label>
+                        </div>
+*/
 
   }
   

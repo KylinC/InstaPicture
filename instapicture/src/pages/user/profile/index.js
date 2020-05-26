@@ -7,6 +7,7 @@ import {safeAuth} from '../../../assets/js/utils/util.js';
 import {request} from '../../../assets/js/libs/request.js';
 import SubHeaderComponent from '../../../components/header/subheader';
 import Css from '../../../assets/css/user/profile/index.css';
+import Css2 from '../myfav/css/friendsList.css';
 class  ProfileIndex extends React.Component{
     constructor(props){
         super(props);
@@ -14,8 +15,51 @@ class  ProfileIndex extends React.Component{
         this.state = {
             sHead:require("../../../assets/images/user/my/default-head.png"),
             sNickname:"昵称",
+            sInterest:[],
             sGender:"",
             iGender:0,
+            hobby:[
+                {
+                    'title':"鲤鱼",
+                    'checked':false
+                },
+                {
+                    'title':"史宾格犬",
+                    'checked':false
+                },
+                {
+                    'title':"磁带播放器",
+                    'checked':false
+                },
+                {
+                    'title':"链锯",
+                    'checked':false
+                },
+                {
+                    'title':"教堂",
+                    'checked':false
+                },
+                {
+                    'title':"法国号角",
+                    'checked':false
+                },
+                {
+                    'title':"垃圾车",
+                    'checked':false
+                },
+                {
+                    'title':"油泵",
+                    'checked':false
+                },
+                {
+                    'title':"高尔夫球",
+                    'checked':false
+                },
+                {
+                    'title':"降落伞",
+                    'checked':false
+                }
+            ],
             sHeadName:""
         }
     }
@@ -28,10 +72,27 @@ class  ProfileIndex extends React.Component{
             let sUrl = config.proxyBaseUrl+"/api/userinfos/queryinfo?token="+config.token;
             request(sUrl,"post",{uid:this.props.state.user.uid}).then(res => {
                 if (res.code === 200) {
-                    this.setState({sHead: res.data.head!==''?res.data.head:this.state.sHead, sNickname: res.data.nickname, iPoints: res.data.points, iGender: res.data.gender,sGender:res.data.gender==='1'?"男":res.data.gender==='2'?"女":""});
+                    this.setState({sHead: res.data.head!==''?res.data.head:this.state.sHead,sInterest:res.data.tags, sNickname: res.data.nickname, iPoints: res.data.points, iGender: res.data.gender,sGender:res.data.gender==='1'?"男":res.data.gender==='2'?"女":""},()=>{
+                        console.log(this.state.sInterest)
+                    });
                 }
             });
-        }
+        };
+        var hobby=this.state.hobby;
+        for(var i=0,len=this.state.sInterest.length;i<len;i++){
+            for(var j=0;j<10;j++){
+                if(hobby[j].title===this.state.sInterest[i]){
+                    hobby[j].checked=!hobby[j].checked;
+                    break;
+                }
+            }
+        };
+        // this.setState({
+        //     hobby:hobby
+        // })
+        this.setState({ hobby:hobby},()=>{
+            console.log(this.state.hobby)
+        });
     }
     componentWillUnmount(){
         this.setState=(state,callback)=>{
@@ -39,6 +100,13 @@ class  ProfileIndex extends React.Component{
         }
     }
     //选择性别
+    changeHobby(key){
+        var hobby = this.state.hobby;
+        hobby[key].checked=!hobby[key].checked;
+        this.setState({
+            hobby:hobby
+        })
+    }
     selectGender(){
         const BUTTONS = ['男', '女', '取消'];
         ActionSheet.showActionSheetWithOptions({
@@ -59,6 +127,13 @@ class  ProfileIndex extends React.Component{
     }
     //保存数据
     submitSave(){
+        var inter=[];
+        for(var i = 0, len = this.state.hobby.length; i < len; i++){
+            if(this.state.hobby[i].checked===true){
+                inter.push(this.state.hobby[i].title);
+            }
+        };
+        console.log(inter);
         if (this.state.sNickname.match(/^\s*$/)){
             Toast.info("请输入昵称",2);
             return false;
@@ -72,7 +147,8 @@ class  ProfileIndex extends React.Component{
             uid:this.props.state.user.uid,
             nickname:this.state.sNickname,
             gender:this.state.iGender,
-            head:this.state.sHead
+            head:this.state.sHead,
+            interest:inter
         };
         request(sUrl, "post",jData).then(res=>{
             if (res.code===200){
@@ -143,6 +219,30 @@ class  ProfileIndex extends React.Component{
                         <li><input type="text" placeholder="请选择性别" readOnly onClick={this.selectGender.bind(this)} value={this.state.sGender} /></li>
                         <li className={Css['arrow']}></li>
                     </ul>
+                    <ul className={Css['list']}>
+                        <li>爱好</li>
+                        <div className={Css2["alert"]} >
+
+                            <label>
+                                  {this.state.sInterest.map((tag,index) =>
+                                             (<span className={Css2["badge"]} key={index}>{tag}</span>)
+                                      )}
+                                    {/* <button>+关注</button> */}
+                                </label>
+                        </div>
+                    </ul>
+                    <ul className={Css['list']}>
+                        <li>修改爱好</li>
+                    </ul>
+                    <div style={{marginLeft:'19px'}}>
+                         {   
+                        this.state.hobby.map( (value,key)=>{
+                            return (<span key={key}>
+                                        <input type="checkbox" checked={value.checked} onChange={this.changeHobby.bind(this,key)}/>{value.title}
+                                    </span>)
+                        })
+                        }
+                    </div>
                 </div>
             </div>
         );

@@ -23,11 +23,9 @@ export default class ContentList extends Component {
   }
 componentDidMount(){
     this.getReco();
-    console.log('6');
 }
 getReco(){
     request(config.proxyBaseUrl+"/api/images/queryinfo?token="+config.token,"post",{uid:this.props.itemData.ImageID}).then(res=>{
-      console.log('7');  
       if (res.code ===200){
             this.setState({storagepath:res.data},()=>{
                 lazyImg();
@@ -67,7 +65,7 @@ getReco(){
         <div className={styles.topRightView}>
           <div className={styles.nickNameAndSendTime}>
           </div>
-          <img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={this.state.storagepath} className={styles.fakeimg}></img>
+          <img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={"http://localhost/"+ this.state.storagepath} className={styles.fakeimg}></img>
           <p>{data.Text}</p>
         </div>
       </div>
