@@ -177,15 +177,15 @@ class IndexComponent extends React.Component{
                 <div className={Css['attr-wrap']}>
                     <div className={Css['main']}>
                         <ul className={Css['head']}>
-                        <li></li>
-                        <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-04-29-%E6%88%AA%E5%B1%8F2020-04-29%20%E4%B8%8B%E5%8D%888.29.00.png"} alt=""/><input ref="headfile" type="file" /></li>
+                            <li></li>
+                            <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg"} alt=""/><input ref="headfile" type="file" /></li>
                         </ul>
                     </div>
                 </div>
                 <div className={Css['amount-wrap']}>
-                    <input />
+                    <input className={Css['amount-name']} type="text" placeholder="输入你的评论吧！" />
                 </div>
-                <div className={Css['sure-btn']}>发布</div>
+                <div className={Css['sure-btn']} >发布</div>
                 </div>
             </div>
              
