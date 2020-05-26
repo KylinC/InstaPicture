@@ -16,7 +16,6 @@ export default class Person extends Component {
     
     render() { 
         let datas=this.props.data;
-        console.log(datas.tags);
       return(
         <div>
                {this._renderHeadView(datas)}     

@@ -73,7 +73,7 @@ class  ProfileIndex extends React.Component{
             request(sUrl,"post",{uid:this.props.state.user.uid}).then(res => {
                 if (res.code === 200) {
                     this.setState({sHead: res.data.head!==''?res.data.head:this.state.sHead,sInterest:res.data.tags, sNickname: res.data.nickname, iPoints: res.data.points, iGender: res.data.gender,sGender:res.data.gender==='1'?"男":res.data.gender==='2'?"女":""},()=>{
-                        console.log(this.state.sInterest)
+                      
                     });
                 }
             });
@@ -91,7 +91,6 @@ class  ProfileIndex extends React.Component{
         //     hobby:hobby
         // })
         this.setState({ hobby:hobby},()=>{
-            console.log(this.state.hobby)
         });
     }
     componentWillUnmount(){

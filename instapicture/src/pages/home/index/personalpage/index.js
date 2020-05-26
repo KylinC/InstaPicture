@@ -7,6 +7,7 @@ import UpRefresh from '../../../../assets/js/libs/uprefresh.js';
 import {request} from '../../../../assets/js/libs/request.js';
 import SubHeaderComponent from '../../../../components/header/subheader';
 import Css from '../../../../assets/css/user/myfav/index.css';
+import Css2 from '../css/friendsList.css';
 import imgURL from '../../../../assets/images/home/index/ins-title.png';
 import styles from '../css/ListItemStyle.css'
 import Content from './homePage/content.js';
@@ -18,7 +19,8 @@ class  PersonalPage extends React.Component{
         safeAuth(props);
         this.state = {
             myinfo:{},
-            mycontent:[]
+            mycontent:[],
+            sInterest:[]
         }
         this.bScroll=true;
         this.oUpRefresh=null;
@@ -42,7 +44,7 @@ class  PersonalPage extends React.Component{
     getReco(){
         request(config.proxyBaseUrl+"/api/userinfos/queryinfo?token="+config.token,"post",{uid:this.props.location.state}).then(res=>{
             if (res.code ===200){
-                this.setState({myinfo:res.data},()=>{
+                this.setState({myinfo:res.data,sInterest:res.data.tags},()=>{
                     lazyImg();
                 })
             }
@@ -65,6 +67,18 @@ class  PersonalPage extends React.Component{
                     <div className={Css['head']}><img className={Css['im-title']} src={imgURL} /></div>
                 </div>
                <Person data={this.state.myinfo}/>
+               <div className={styles.item}>
+               <div className={styles.part2}>
+                <p>兴趣标签</p>
+               <div className={Css2["alert"]} >
+                    <label>
+                        {this.state.sInterest.map((tag,index) =>
+                            (<span className={Css2["badge"]} key={index}>{tag}</span>)
+                        )}
+                        </label>
+                </div>
+                </div>
+                </div>
                <Content data={this.state.mycontent}/>
                 </div>
         

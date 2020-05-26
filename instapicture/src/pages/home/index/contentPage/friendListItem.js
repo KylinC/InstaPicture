@@ -14,7 +14,6 @@ export default class FriendListItem extends Component {
           <div>
             <div className={styles.littlepart}>
               <a><img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={datas.ProfileImagePath} className={styles.imgStyle}></img></a>
-              <a className={styles.wid}> ID: {datas.UserID}</a>
               <a className={styles.wid}>{datas.UserName}</a>
               <span><Link to={{pathname:config.path+"home/index/personalpage/index",state:datas.UserID}}>主页</Link></span>
             </div>
