@@ -1,13 +1,25 @@
 import React from 'react';
+import {connect} from "react-redux";
 import Css from './friendsList.css';
 import {request} from '../../assets/js/libs/request.js';
+import config from "../../assets/js/conf/config";
+import {Toast} from "antd-mobile";
 
 class FriendsList extends React.Component{
     constructor(props){
         super(props)
     }
     addFri(name){
-        console.log(name);
+
+        let sUrl=config.proxyBaseUrl+"/api/friends/addfriend/?token="+config.token;
+        request(sUrl, "post",{uid:this.props.state.user.uid,focusname:name}).then(res=>{
+            // console.log("enter",res);
+            if (res.code ===200){
+                Toast.info(res.data,5);
+            }else{
+                Toast.info(res.data,2);
+            }
+        });
     }
 
     render(){
@@ -45,5 +57,8 @@ class FriendsList extends React.Component{
         }
     }
 }
-
-export default FriendsList;
+export default connect((state)=>{
+    return{
+        state:state
+    }
+})(FriendsList)
