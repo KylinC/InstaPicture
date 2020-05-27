@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   font-size: 12px;
+  font-family: Georgia;
 }
 /**
  * 评论列表样式
@@ -43,7 +44,7 @@
  * 评论内容样式
  */
 .textareaViewStyle{
-  margin-left: 20px;
+  margin-left: 4px;
   display: flex;
   flex-direction: column;
   flex:1;
@@ -55,16 +56,30 @@
  */
 .commentBtnStyle{
   width: 100px;
-  background: #ff8146;
+  background-image:url("../../../../assets/images/home/index/background1.jpg");
   margin-top: 10px;
-  border: 1px solid #f77c3d;
-  color: #fff;
+  color: rgb(12, 11, 11);
   height: 25px;
   font-size: 14px;
+  
+}
+.commentBtnStyle2{
+  width: 100px;
+  background-image:url("../../../../assets/images/home/index/background1.jpg");
+  margin-top: 10px;
+  color: rgb(12, 11, 11);
+  height: 25px;
+  font-size: 14px;
+  margin-left: 80px;
 }
 /**
  * 时间字体大小
  */
 .timeSize{
-  font-size: 14px;
+  font-size: 10px;
+}
+.item{
+  display:inline;
+  background-color: #fff;
+  padding: 10px;
 }

@@ -109,12 +109,14 @@ class WeiBoListItem extends Component {
    _renderFooterView(){
        return(
          <div className={styles.commentViewStyle}>
+            <div className={styles.item}>
            <ul className={styles.butstyle}>
              {/* 此处新增方法 */}
              <li className={styles.button} onClick={this._dianzan.bind(this)}>点赞:{this.state.likeNum}</li><div className={styles.shuxian}></div>
              <li className={styles.button} >评论:{this.state.commentNum}</li><div className={styles.shuxian}></div>
              <li className={styles.button} onClick={this._fandui.bind(this)}>反对:{this.state.unlikeNum}</li><div className={styles.shuxian}></div>
            </ul>
+           </div>
          </div>
        );
    }

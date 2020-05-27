@@ -19,7 +19,7 @@ body{
 .item{
   display: flex;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
 }
 /*顶部view样式*/
 .topRightView{

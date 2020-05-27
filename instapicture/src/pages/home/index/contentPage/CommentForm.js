@@ -40,7 +40,8 @@ class CommentForm extends Component {
     super();
     this.state =  {
       //默认回复内容为空
-      replycontents:[]
+      replycontents:[],
+      IFshow:false
     }
   }
   componentDidMount(){
@@ -57,7 +58,9 @@ class CommentForm extends Component {
         } )
     };
     };
-    this.setState({replycontents:com});
+    this.setState({replycontents:com},()=>{
+
+    });
   }
 
   render() {
@@ -74,15 +77,22 @@ class CommentForm extends Component {
           {/* 回复的文本框 */}
             <div className={styles.textareaViewStyle}>
               <textarea cols='4' rows='4' ref="content"/>
+              <div className={styles.item}>
               <button className={styles.commentBtnStyle} onClick={this._reply.bind(this)}>评论</button>
+              <button className={styles.commentBtnStyle2} onClick={this._reply2.bind(this)}>查看评论</button>
+              </div>
             </div>
         </div>
         {/* 回复内容 */}
-            {replyContentDatas}
+       {this.state.IFshow?replyContentDatas:null}
       </div>
      );
   }
-
+  _reply2(){
+    this.setState({
+      IFshow:!this.state.IFshow
+    })
+  }
   /**
    * 回复评论功能
    */
