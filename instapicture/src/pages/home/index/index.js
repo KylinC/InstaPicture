@@ -10,6 +10,7 @@ import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faList, faUserCircle, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 import imgURL from '../../../assets/images/home/index/ins-title.png';
+import {Toast} from "antd-mobile";
 
 import WeiBoList from './contentPage/WeiBoList.js' ;
 import Recitem from './data/item.json';
@@ -29,7 +30,10 @@ class IndexComponent extends React.Component{
             sRecitem:[],
             bScroll:false,
             isFresh:false,
-            pageStyle:{display:"none"}
+            pageStyle:{display:"none"},
+            uploads:"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg",
+            uploadsfile:"",
+            uploadscom:""
         }
         this.bScroll=true;
         this.friend=[];
@@ -104,7 +108,56 @@ class IndexComponent extends React.Component{
             this.setState({sCartPanel:Css['down'],bMask:false});
         }
     }
+    uploadImg(){
+        let formData = new FormData();
+        formData.append('imgfile', this.refs['imgfile'].files[0]);
 
+        let sUrl=config.proxyBaseUrl+"/api/items/uploadimg";
+        // console.log(this.refs['headfile'].files[0]);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', config.proxyBaseUrl+"/api/items/uploadimg");
+        xhr.onreadystatechange=()=>{
+            if(xhr.readyState == 4 && xhr.status == 200){
+                var res=eval('(' + xhr.responseText + ')');
+                if (res.code===200){
+                    // console("callback succ");
+                    this.setState({uploads:"http://localhost/"+res.data.generatename});
+                    this.setState({uploadsfile:res.data.generatename});
+                }
+            }
+        }
+        xhr.onload = function() {
+            // console.log(xhr);
+        }
+        xhr.send(formData);
+    }
+    comChange(e){
+        this.setState({
+            uploadscom:e.target.value
+        })
+    }
+    sureUpload(){
+        console.log(this.state.uploads,this.state.uploadsfile,this.state.uploadscom);
+        let sUrl=config.proxyBaseUrl+"/api/items/release/?token="+config.token;
+
+        request(sUrl, "post",{uid:this.props.state.user.uid,upic:this.state.uploadsfile,ucomment:this.state.uploadscom}).then(res=>{
+            // console.log("enter",res);
+            if (res.code ===200){
+                if (!this.bMove){
+                    this.setState({sCartPanel:Css['down'],bMask:false});
+                }
+                Toast.info(res.data,3);
+                this.setState({uploads:"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg",uploadscom:''});
+            }else{
+                Toast.info("发布未成功",2);
+            }
+        });
+
+        if (!this.bMove){
+            this.setState({sCartPanel:Css['down'],bMask:false});
+        }
+        Toast.info("发布成功",2);
+    }
     getReco(){
             request(config.proxyBaseUrl+"/api/userinfos/queryID?token="+config.token,"post",{uid:Recfriend.data}).then(res=>{
                 if (res.code ===200){
@@ -178,14 +231,14 @@ class IndexComponent extends React.Component{
                     <div className={Css['main']}>
                         <ul className={Css['head']}>
                         <li></li>
-                        <li><img src={"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg"} alt=""/><input ref="headfile" type="file" /></li>
+                        <li><img src={this.state.uploads} alt=""/><input ref="imgfile" type="file" onChange={this.uploadImg.bind(this)}/></li>
                         </ul>
                     </div>
                 </div>
                 <div className={Css['amount-wrap']}>
-                    <input />
+                    <input className={Css['amount-name']} type="text" placeholder="输入你的评论吧！" onChange={(e)=>this.comChange(e)} value={this.state.uploadscom}/>
                 </div>
-                <div className={Css['sure-btn']}>发布</div>
+                <div className={Css['sure-btn']} onClick={this.sureUpload.bind(this)}>发布</div>
                 </div>
             </div>
              

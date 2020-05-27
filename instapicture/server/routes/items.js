@@ -1,8 +1,11 @@
 var express=require('express');
 var router=express.Router();
 var mongoose=require('mongoose');
+const multer  = require('multer');
+const Urlconfig = require('../utils/config');
 // schema
 var Model=require('../models/items');
+var imgModel=require('../models/images');
 
 // password require
 mongoose.connect('mongodb://127.0.0.1:27017/picturebase');//design是数据库名
@@ -111,6 +114,78 @@ router.post('/queryID/',function(req,res,next){
                     data:docs
                 })
         }
+    })
+})
+
+// default file path
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+        var singfileArray = file.originalname.split('.');
+        var fileExtension = singfileArray[singfileArray.length - 1];
+        cb(null, singfileArray[0] + '-' + Date.now() + "." + fileExtension);
+        // console.log(file);
+    }
+})
+
+var upload = multer({
+    storage: storage
+})
+
+router.post('/uploadimg/',upload.single('imgfile'),function(req,res,next){
+    let file = req.file;
+    console.log(file);
+    res.json({
+        status:1,
+        code: 200,
+        data:{
+            originname:file.originalname,
+            generatename:file.filename
+        }
+    })
+})
+
+router.post('/release/',function(req,res,next){
+    var imageid=Math.floor(Math.random()*(4000-2000+1)+2000);
+
+    var newimage = new imgModel({
+        ImageID : imageid,
+        UserID : req.body.uid,
+        StoragePath : req.body.upic
+    });
+    newimage.save(function (err, res) {
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log("Res:" + res);
+        }
+    });
+
+    var newitem = new Model({
+        ItemID : Math.floor(Math.random()*(4000-2000+1)+2000),
+        OwnerID: req.body.uid,
+        Text: req.body.ucomment,
+        ImageID:imageid,
+        ProsNum:0,
+        ConsNum:0,
+        CommentNum:0
+    });
+    newitem.save(function (err, res) {
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log("Res:" + res);
+        }
+    });
+
+    res.json({
+        success:'true',
+        code:200,
+        data:"发布成功！"
     })
 })
 
