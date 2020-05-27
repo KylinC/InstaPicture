@@ -17,7 +17,7 @@ export default class Content extends Component {
         <div>
                <div className={styles.item}>
                  <div className={styles.part}>
-                    最近的动态
+                    <div style={{marginLeft:10}}>最近的动态</div>
                 </div>
                </div>
                {this._renderFooterView(datas)}

@@ -201,7 +201,7 @@ class IndexComponent extends React.Component{
 
                 <div className={styles.item}>
                  <div className={styles.part}>
-                    可能感兴趣的陌生人
+                 <div style={{marginLeft:10}}>可能感兴趣的陌生人</div>
                 </div>
                </div>
                <div className={styles.item}>
@@ -209,7 +209,7 @@ class IndexComponent extends React.Component{
                </div>
                 <div className={styles.item}>
                  <div className={styles.part}>
-                    可能感兴趣的内容
+                 <div style={{marginLeft:10}}>可能感兴趣的内容</div>
                 </div>
                </div>
                <div className={styles.item}>
