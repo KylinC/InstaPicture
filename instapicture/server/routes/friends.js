@@ -94,5 +94,46 @@ router.post('/search/',function(req,res,next){
     })
 })
 
+router.post('/addfriend/',function(req,res,next){
+    userModel.find({UserName:req.body.focusname},function(err,docs){
+        if(docs.length===0){
+            res.json({
+                success:'true',
+                code:201,
+                data:"虚假的好友，这你也信？！"
+            })
+        }
+        else{
+            // console.log(docs[0].UserID);
+            // res.json({
+            //     success:'true',
+            //     code:200,
+            //     data:[{Name:docs[0].UserName,
+            //         imgRoad:docs[0].ProfileImagePath,
+            //         tags:docs[0].TagList
+            //     }]
+            // })
+
+            var newitem = new Model({
+                CelebrityID : docs[0].UserID,
+                FollowerID: req.body.uid
+            });
+            newitem.save(function (err, res) {
+                if (err) {
+                    console.log("Error:" + err);
+                }
+                else {
+                    console.log("Res:" + res);
+                }
+            });
+            res.json({
+                success:'true',
+                code:200,
+                data:"添加成功！"
+            })
+        }
+    })
+})
+
 module.exports=router;
 
