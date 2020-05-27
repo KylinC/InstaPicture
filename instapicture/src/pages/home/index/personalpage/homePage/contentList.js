@@ -64,9 +64,9 @@ getReco(){
         <img src={require("../../../../../assets/images/common/lazyImg.jpg")} data-echo={this.state.figurepath} className={styles.imgStyle}></img>
         <div className={styles.topRightView}>
           <div className={styles.nickNameAndSendTime}>
+          <p style={{marginTop:40}}>{data.Text}</p>
           </div>
           <img src={require("../../../../../assets/images/common/lazyImg.jpg")} data-echo={"http://localhost/"+ this.state.storagepath} className={styles.fakeimg}></img>
-          <p>{data.Text}</p>
         </div>
       </div>
     )
@@ -78,12 +78,14 @@ getReco(){
    _renderFooterView(data){
        return(
          <div className={styles.commentViewStyle}>
+            <div className={styles.item}>
           <ul className={styles.butstyle}>
              {/* 此处新增方法 */}
              <li className={styles.button} >点赞:{this.state.likeNum}</li><div className={styles.shuxian}></div>
              <li className={styles.button} >评论:{this.state.commentNum}</li><div className={styles.shuxian}></div>
              <li className={styles.button} >反对:{this.state.unlikeNum}</li><div className={styles.shuxian}></div>
            </ul>
+           </div>
          </div>
        );
    }

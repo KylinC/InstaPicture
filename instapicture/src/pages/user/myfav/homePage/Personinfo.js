@@ -37,16 +37,13 @@ export default class Person extends Component {
               头像：<img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={datas.head} className={styles.imgStyle}></img>
           </p>
           <p className={styles.isolation}>
-              ID：{datas.uid}
+              姓名：{datas.nickname}
           </p>
           <p className={styles.isolation}>
-              Name：{datas.nickname}
+              性别：{(datas.gender==="1")?'男':'女'}
           </p>
           <p className={styles.isolation}>
-              Gender：{(datas.gender==="1")?'Male':'Female'}
-          </p>
-          <p className={styles.isolation}>
-              Cellphone：{datas.cellPhone}
+              联系方式：{datas.cellPhone}
           </p>
         </div>
                   

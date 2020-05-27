@@ -69,7 +69,7 @@ class  PersonalPage extends React.Component{
                <Person data={this.state.myinfo}/>
                <div className={styles.item}>
                <div className={styles.part2}>
-                <p>兴趣标签</p>
+                <p style={{marginLeft:10}}>兴趣标签</p>
                <div className={Css2["alert"]} >
                     <label>
                         {this.state.sInterest.map((tag,index) =>

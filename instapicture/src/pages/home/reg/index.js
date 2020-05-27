@@ -166,8 +166,8 @@ export default class RegIndex extends React.Component{
                     <a>请选择性别</a>
                     <a style={{marginLeft:'190px'}}>
                     <select value={this.state.sGender} onChange={(e)=>{this.setState({sGender:e.target.value})}}>
-                        <option value='Male'>男</option>
-                        <option value='Female'>女</option>
+                        <option value='男'>男</option>
+                        <option value='女'>女</option>
                     </select>
                     </a>
                     </div>

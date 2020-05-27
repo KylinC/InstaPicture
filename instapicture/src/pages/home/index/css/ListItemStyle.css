@@ -97,7 +97,7 @@ body{
  }
  .demo2{
 	width:100%;
-	height:180px;
+	height:150px;
 	border:2px solid rgb(160, 139, 144);
 	background-image:url("../../../../assets/images/home/index/background1.jpg");
 }
@@ -199,4 +199,9 @@ body{
 }
 .isolation{
   padding: 7px;
+  margin-left: 10px;
+}
+.pa{
+  margin-top: 20px;
+ 
 }

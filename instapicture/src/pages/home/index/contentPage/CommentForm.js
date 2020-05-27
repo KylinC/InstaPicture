@@ -76,7 +76,7 @@ class CommentForm extends Component {
         <div className={styles.headView}>
           {/* 回复的文本框 */}
             <div className={styles.textareaViewStyle}>
-              <textarea className={styles.textareaClass} cols='4' rows='4' ref="content"/>
+              <textarea cols='4' rows='4' ref="content"/>
               <div className={styles.item}>
               <button className={styles.commentBtnStyle} onClick={this._reply.bind(this)}>评论</button>
               <button className={styles.commentBtnStyle2} onClick={this._reply2.bind(this)}>查看评论</button>

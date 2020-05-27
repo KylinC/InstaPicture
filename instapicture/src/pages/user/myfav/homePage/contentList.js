@@ -65,8 +65,9 @@ getReco(){
         <div className={styles.topRightView}>
           <div className={styles.nickNameAndSendTime}>
           </div>
+          <p style={{marginTop:40}}>{data.Text}</p>
           <img src={require("../../../../assets/images/common/lazyImg.jpg")} data-echo={"http://localhost/"+ this.state.storagepath} className={styles.fakeimg}></img>
-          <p>{data.Text}</p>
+         
         </div>
       </div>
     )
