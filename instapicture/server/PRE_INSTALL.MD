@@ -1,8 +1,9 @@
 ### Dependencies
 
-- Python >=3.6
+- Python >= 3.6
+- Node.js <= v8.17.1
 
-Install necessary packages:
+Install necessary python packages:
 
 ```bash
 pip install -r requirements.txt
