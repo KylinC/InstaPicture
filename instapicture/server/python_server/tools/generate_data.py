@@ -5,7 +5,6 @@ import numpy as np
 import random
 import PIL
 import pandas
-import json
 import torch
 import torch.nn as nn
 import os.path as osp
@@ -14,6 +13,7 @@ from utils.imageio import imread
 from sklearn.metrics.pairwise import cosine_similarity
 import time
 import datetime
+from utils.name import get_random_full_name
 torch.hub.set_dir(osp.join(osp.abspath(osp.curdir), 'Cache'))
 
 
@@ -22,6 +22,44 @@ IMG_FOLDER_NAME = ['n01440764', 'n02102040', 'n02979186', 'n03000684', 'n0302807
                   'n03394916', 'n03417042', 'n03425413', 'n03445777', 'n03888257']
 TotalTagList = ['鲤鱼', '史宾格犬', '磁带播放机', '链锯', '教堂',
                 '法国号角', '垃圾车', '油泵', '高尔夫球', '降落伞']
+ProfileImageUrlList = [
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-v2-fda399250493e674f2152c581490d6eb_1200x500.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-v2-683621baf0000080e8f9112b078a6744_1440w.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-uxtgcW0BJleJMoPMtGbb.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-8-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-7-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-6-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-5-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-4-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-3-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-2-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-images%20-1-.jpg',
+    'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-5b696acbN3b3ab8a3.jpg',
+]
+CommentList = [
+    '感觉还不错',
+    '垃圾',
+    '稳的很',
+    '我觉得挺好的',
+    '非常棒！',
+    '就那样吧',
+    '很有艺术气息',
+    '我爱你！！！',
+    '别出来显摆了',
+    '还行吧',
+    '感觉看过类似的照片',
+    '比较应景',
+    '请收下我的膝盖orz',
+    'Up主太强了！！',
+    '我也想要一个',
+    '感觉很fancy',
+    '感觉很nice',
+]
+ItemTextList = [
+    '你们觉得怎么样？', '我觉得还OK', '', '', '请大家给我点赞！', '最喜欢这个了哈哈哈', '给大家看看我的收藏', '', '', '',
+    '', '今天有点小开心', ''
+]
 TOTAL_TAG_NUM = len(TotalTagList)
 IMG_ROOT = osp.abspath('Data/imagenette2/train')
 ImgPathList = [[] for _ in range(TOTAL_TAG_NUM)]
@@ -39,10 +77,14 @@ MEAN_PUBLIC_IMG_NUM_PER_USER = 5.2
 MEAN_PROS_NUM_PER_USER = 500
 MEAN_CONS_NUM_PER_USER = 500
 MEAN_FRIEND_NUM_PER_USER = 20
+FRIEND_POST_K = 50
+MEAN_COMMENT_NUM_PER_USER = 10
 PRIVATE_IMG_WEIGHT = 1.0
 PUBLIC_IMG_WEIGHT = 2.0
 START_TIMESTAMP = time.mktime(time.strptime('May 1 2020  01:00:00', '%b %d %Y %I:%M:%S'))
 END_TIMESTAMP = time.mktime(time.strptime('May 10 2020  11:59:00', '%b %d %Y %I:%M:%S'))
+BIRTH_START_TIMESTAMP = time.mktime(time.strptime('May 1 1985  01:00:00', '%b %d %Y %I:%M:%S'))
+BIRTH_END_TIMESTAMP = time.mktime(time.strptime('May 1 2005  01:00:00', '%b %d %Y %I:%M:%S'))
 
 system = wmi.WMI()
 cpu = system.Win32_Processor()
@@ -249,7 +291,7 @@ def generate_items(db, ImgIdxPointerList):
                 'ProsNum': 0,
                 'ConsNum': 0,
                 'CommentNum': 0,
-                'CommentUserIDList': [],
+                'CommentIDList': [],
                 'UploadTime': UploadTime
             }
             Items.insert_one(Item)
@@ -373,7 +415,7 @@ def generate_social_feature(db):
     UserInfos = db.UserInfos
     Friends = db.Friends
     users = pandas.DataFrame(
-        UserInfos.find({}, {'UserID': 1, 'UserFeature': 1, '_id': 0}))
+        UserInfos.find({}, {'UserID': 1, 'UserFeature': 1, 'TagList':1, '_id': 0}))
     user_features = np.concatenate(users['UserFeature'].values).reshape((NUM_USER, -1))
     user_IDs = users['UserID'].values
     similarity = cosine_similarity(user_features)
@@ -382,9 +424,17 @@ def generate_social_feature(db):
         N_friend = np.random.poisson(lam=MEAN_FRIEND_NUM_PER_USER)
         while N_friend + 1 > NUM_USER:
             N_friend = np.random.poisson(lam=MEAN_FRIEND_NUM_PER_USER)
-        friend_idxs = sort_similarity_idxs[user_i, 1:N_friend+1]
+        post_friend_idxs = sort_similarity_idxs[user_i, 1:FRIEND_POST_K + 1]
+        friend_idxs = np.random.choice(post_friend_idxs, N_friend)
         friend_IDs = user_IDs[friend_idxs]
         UserID = int(user_IDs[user_i])
+
+        user_tag_list = users['TagList'].values[user_i]
+        # print('user tag list: {}'.format(user_tag_list))
+        # friends = UserInfos.find({'UserID': {'$in': friend_IDs.tolist()}}, {'TagList': 1, '_id': 0})
+        # friends = list(friends)
+        # friends = pandas.DataFrame(friends)
+        # print('friends tag list: {}'.format(friends['TagList'].values))
         for friend_ID in friend_IDs:
             Friend = {
                 'CelebrityID': int(friend_ID),
@@ -396,24 +446,72 @@ def generate_social_feature(db):
         print('User {} generates {} friends and corresponding social feature.'.format(user_i, N_friend))
 
 
-def writeToJSONFile(collection, json_file, filter={}):
-    cursor = collection.find(filter)
-    num_max = collection.count_documents(filter)
-    file = open(json_file, "w")
-    file.write('[')
+def generate_user_basic_info(db):
+    UserInfos = db.UserInfos
+    cursor = UserInfos.find({}, {'UserID': 1})
+    for idx, user_dict in enumerate(cursor):
+        UserID = user_dict['UserID']
+        PhoneNum = str(int(189*1e8 + random.randint(0, 9999)*1e4 + idx))
+        UserName = get_random_full_name()
+        Password = ''.join(random.sample("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890", 6))
+        Gender = random.sample(['男', '女'], 1)[0]
+        ProfileImagePath = random.sample(ProfileImageUrlList, 1)[0]
+        birth_time = random.randint(BIRTH_START_TIMESTAMP, BIRTH_END_TIMESTAMP)
+        date_local = time.localtime(birth_time)
+        BirthDate = time.strftime("%Y-%m-%d", date_local)
 
-    qnt_cursor = 0
-    for document in cursor:
-        qnt_cursor += 1
-        if num_max == 1:
-            file.write(json.dumps(document, indent=4, default=str))
-        elif num_max >= 1 and qnt_cursor <= num_max-1:
-            file.write(json.dumps(document, indent=4, default=str))
-            file.write(',')
-        elif qnt_cursor == num_max:
-            file.write(json.dumps(document, indent=4, default=str))
-    file.write(']')
-    return file
+        UserInfos.update_one({'UserID': UserID},
+                             {'$set': {'PhoneNum': PhoneNum,
+                                       'UserName': UserName,
+                                       'Password': Password,
+                                       'Gender': Gender,
+                                       'ProfileImagePath': ProfileImagePath,
+                                       'BirthDate': BirthDate
+                                       }})
+    print('Finiesh generating basic user info!')
+
+
+def generate_comments(db):
+    TOTAL_COMMENT_COUNTER = 0
+    Comments = db.Comments
+    UserInfos = db.UserInfos
+    Items = db.Items
+    items_dict_list = Items.find({}, {'ItemID': 1, 'UploadTime': 1})
+    items_dict_list = list(items_dict_list)
+    cursor = UserInfos.find({}, {'UserID': 1})
+    for idx, user_dict in enumerate(cursor):
+        UserID = user_dict['UserID']
+        N_comments = np.random.poisson(lam=MEAN_COMMENT_NUM_PER_USER)
+        for comment_i in range(N_comments):
+            item_idx = np.random.choice(range(len(items_dict_list)))
+            ItemID = items_dict_list[item_idx]['ItemID']
+            item_time = items_dict_list[item_idx]['UploadTime']
+            UploadTimeStamp = time.mktime(item_time.timetuple())
+            Time = generate_random_timestamp(UploadTimeStamp, END_TIMESTAMP)
+            CommentText = np.random.choice(CommentList)
+            CommentID = generate_id(TOTAL_COMMENT_COUNTER)
+            Comment = {
+                'CommentID': CommentID,
+                'ItemID': ItemID,
+                'CommentUserID': UserID,
+                'CommentText': CommentText,
+                'Time': Time
+            }
+            Comments.insert_one(Comment)
+            Items.update_one({'ItemID': ItemID}, {'$push': {'CommentIDList': CommentID},
+                                                  '$inc': {'CommentNum': 1}})
+            TOTAL_COMMENT_COUNTER += 1
+    print('Finish generating {} comments!'.format(TOTAL_COMMENT_COUNTER))
+
+
+def generate_item_texts(db):
+    Items = db.Items
+    cursor = Items.find({}, {'ItemID': 1})
+    for idx, item_dict in enumerate(cursor):
+        ItemID = item_dict['ItemID']
+        Text = np.random.choice(ItemTextList)
+        Items.update_one({'ItemID': ItemID}, {'$set': {'Text': Text}})
+    print('Finish generating item texts!')
 
 
 if __name__ == '__main__':
@@ -451,9 +549,9 @@ if __name__ == '__main__':
     # generate_social_feature(db)
 
     "8. Delete extra fields and update extra fields"
-    # db.UserInfos.update_many({'Index': {'$exists': True}}, {'$unset': {'Index': 1}}, False, True)
-    # db.Items.update_many({'CommentUserIDList': {'$exists': True}}, {'$unset': {'CommentUserIDList': 1}}, False, True)
-    # db.Items.update_many({}, {'$set': {'CommentIDList': []}})
+    # db.UserInfos.update_many({'Index': {'$exists': True}}, {'$unset': {'Index': 1}}, False)
+    # db.Items.update_many({'CommentUserIDList': {'$exists': True}}, {'$unset': {'CommentUserIDList': 1}}, upsert=False)
+    # db.Items.update_many({}, {'$set': {'CommentIDList': [], 'CommentNum': 0}})
 
     # db.Items.create_index([('ItemID', pymongo.ASCENDING)])
     # db.Images.create_index([('ImageID', pymongo.ASCENDING)])
@@ -466,15 +564,15 @@ if __name__ == '__main__':
     #     image_feature = image_dict['ImageFeature']
     #     db.Items.update_one({'ItemID': item_id}, {'$set': {'ItemFeature': image_feature}})
 
+    "9. Generate user basic infos(username, password etc) "
+    # generate_user_basic_info(db)
 
+    "10. Generate comments"
+    # db.Items.update_many({}, {'$set': {'CommentIDList': [], 'CommentNum': 0}})
+    # generate_comments(db)
 
-    "9. Export data to json"
-    # dir_path = osp.abspath('../Data/train_v1')
-    # writeToJSONFile(db.Items, osp.join(dir_path, 'Items.json'))
-    # writeToJSONFile(db.UserInfos, osp.join(dir_path, 'UserInfos.json'))
-    # writeToJSONFile(db.Friends, osp.join(dir_path, 'Friends.json'))
-    # writeToJSONFile(db.Images, osp.join(dir_path, 'Images.json'))
-    # writeToJSONFile(db.Pros, osp.join(dir_path, 'Pros.json'))
-    # writeToJSONFile(db.Cons, osp.join(dir_path, 'Cons.json'))
+    "11. Generate item text"
+    # generate_item_texts(db)
+
 
 

@@ -11,9 +11,9 @@ PORT = 4242
 
 class PythonServer(object):
     def __init__(self,
-                 rec_model_path='work_dir/exp-bs64-no_dropout/epoch_2.pth',
-                 cnn_model_path='./Cache',
-                 img_root='D:\\File\\大三下\\软件工程\\大作业\\Code\\Data\\imagenette2\\train'):
+                 rec_model_path='./python_server/work_dir/exp-bs64-no_dropout/epoch_2.pth',
+                 cnn_model_path='./python_server/Cache',
+                 img_root='./public/uploads'):
         self.IMG_FEAT_DIM = 512
         self.USER_FEAT_DIM = 522
         self.TotalTagList = ['鲤鱼', '史宾格犬', '磁带播放机', '链锯', '教堂',
@@ -22,7 +22,7 @@ class PythonServer(object):
         self.img_root = img_root
         try:
             self.client = pymongo.MongoClient(host='localhost', port=27017)
-            self.db = self.client['InstaPicture']
+            self.db = self.client['picturebase']
             self.create_Images_Index()
             self.create_Items_Index()
             self.create_UserInfos_Index()
@@ -58,7 +58,6 @@ class PythonServer(object):
 
     def create_Friends_Index(self):
         self.db.Friends.create_index([('FollowerID', pymongo.ASCENDING)], background=True)
-
 
     def get_rec_items(self, user_id, pre_K=300, post_K=30, final_K=10):
         user_id = int(user_id)
@@ -99,7 +98,7 @@ class PythonServer(object):
 
         return final_item_ids
 
-    def get_rec_users(self, user_id, pre_K=700, post_K=20, final_K=10):
+    def get_rec_users(self, user_id, pre_K=700, post_K=20, final_K=5):
         user_id = int(user_id)
         pre_K = min(self.db.UserInfos.count_documents({}), pre_K)
 
@@ -168,11 +167,11 @@ class PythonServer(object):
             return
         friends_dict_list = self.db.Friends.find({'FollowerID': user_id}, {'CelebrityID': 1})
         friends_dict_list = list(friends_dict_list)
-        friend_ids = pandas.DataFrame(friends_dict_list)['CelebrityID'].values.tolist()
+        if len(friends_dict_list) > 0:
+            friend_ids = pandas.DataFrame(friends_dict_list)['CelebrityID'].values.tolist()
+            users_dict_list = self.db.UserInfos.find({'UserID': {'$in': friend_ids}}, {'UserID': 1, 'UserFeature': 1})
+            users_dict_list = list(users_dict_list)
 
-        users_dict_list = self.db.UserInfos.find({'UserID': {'$in': friend_ids}}, {'UserID': 1, 'UserFeature': 1})
-        users_dict_list = list(users_dict_list)
-        if len(users_dict_list) > 0:
             friends_infos = pandas.DataFrame(users_dict_list)
             friend_user_features = np.vstack(friends_infos['UserFeature'].values.tolist())
             SocialFeature = np.mean(friend_user_features, axis=0).tolist()
