@@ -1,21 +1,28 @@
 import React from 'react';
 import {connect} from "react-redux";
 import config from '../../../assets/js/conf/config.js';
-import action from '../../../actions';
 import SubHeaderComponent from '../../../components/header/subheader';
-//import Css from '../../../assets/css/home/cart/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faUser, faUserCircle, faSearch} from '@fortawesome/free-solid-svg-icons'
 import Css from '../../../assets/css/user/my/index.css';
+import {request} from "../../../assets/js/libs/request";
+
 class CartIndex extends React.Component{
-    constructor(){
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
         }
     }
     componentDidMount(){
+        this.update_state()
     }
     componentWillUnmount(){
+    }
+    async update_state(){
+        let sUrl=config.proxyBaseUrl+"/python/update_social_feature?token="+config.token;
+        await request(sUrl, "post",{uid:this.props.state.user.uid}).then(res=>{
+            console.log('update social feature: ' + res.success)
+        });
     }
     pushPage(url){
         this.props.history.push(config.path+url);

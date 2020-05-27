@@ -27,3 +27,5 @@ yarn-error.log*
 
 #picture
 /server/public/uploads
+# temp file
+/server/python_server/Cache/

@@ -1,13 +1,9 @@
 import React from 'react';
 import {connect} from "react-redux";
-import  {Route,Switch}  from  'react-router-dom';
 import Friendslist from '../../../src/components/Friends/FriendsList';
-import asyncComponents from '../../components/async/AsyncComponent';
 import config from '../../assets/js/conf/config.js';
 import {request} from '../../assets/js/libs/request.js';
-import Css from '../../assets/css/home/home/index.css';
 import SubHeaderComponent from '../../components/header/subheader';
-import action from "../../actions";
 import {Toast} from "antd-mobile";
 
 class List extends React.Component{

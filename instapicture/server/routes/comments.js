@@ -32,7 +32,7 @@ router.post('/',function(req,res,next){
 router.post('/queryID/',function(req,res,next){
     Model.find({CommentID:req.body.uid},function(err,docs){
         console.log(req.body.uid);
-        console.log(docs);
+        // console.log(docs);
         if(err){
             res.json({
                 success:'fail',

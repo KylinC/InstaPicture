@@ -28,7 +28,7 @@ class  ProfileIndex extends React.Component{
                     'checked':false
                 },
                 {
-                    'title':"磁带播放器",
+                    'title':"磁带播放机",
                     'checked':false
                 },
                 {
@@ -125,7 +125,7 @@ class  ProfileIndex extends React.Component{
             });
     }
     //保存数据
-    submitSave(){
+    async submitSave(){
         var inter=[];
         for(var i = 0, len = this.state.hobby.length; i < len; i++){
             if(this.state.hobby[i].checked===true){
@@ -149,12 +149,16 @@ class  ProfileIndex extends React.Component{
             head:this.state.sHead,
             interest:inter
         };
-        request(sUrl, "post",jData).then(res=>{
+        await request(sUrl,"post",jData).then(res=>{
             if (res.code===200){
                 Toast.info(res.data,2,()=>{
                     this.props.history.goBack();
                 });
             }
+        });
+        await request(config.proxyBaseUrl+'/python/update_user_feature?token='+config.token,
+            "post", {uid: this.props.state.user.uid}).then(res=>{
+            console.log('update user feature: ' + res.success)
         });
     }
     //图片上传

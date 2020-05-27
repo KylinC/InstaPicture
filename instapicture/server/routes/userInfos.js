@@ -20,7 +20,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/picturebase');//design是数据库�
 
 // mount (disconnected,error)
 mongoose.connection.on('connected',function(){
-    console.log('connected');
+    // console.log('connected');
 });
 
 // relative router
@@ -44,18 +44,20 @@ router.post('/',function(req,res,next){
 })
 //注册虽然出错，但会写入数据库
 router.post('/reginfo/',function(req,res,next){
+   console.log('UserID='+req.body.id);
+   console.log('TagList='+req.body.interest.split(","));
    var user=new Model({
        UserID:req.body.id,
        UserName: req.body.nickname,
        PhoneNum: req.body.cellphone,
        Password: req.body.password,
-       TagList:  req.body.interest,
-       BirthDate:"00/01/01",
+       TagList:  req.body.interest.split(","),
+       BirthDate:"1998/06/02",
        Gender:req.body.gender,
        UploadImageNum:0,
-       MaxImageNum:20,
+       MaxImageNum:100,
        TagFeature: [],
-       UserFeature:[],
+       UserFeature: [],
        SocialFeature:[],
        ProfileImagePath:"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-04-29-%E6%88%AA%E5%B1%8F2020-04-29%20%E4%B8%8B%E5%8D%888.29.00.png"
    });
@@ -78,7 +80,7 @@ router.post('/isreg/',function(req,res,next){
     console.log('check register');
     Model.find({PhoneNum: req.body.cellphone},function(err,docs){
         console.log(req.body.cellphone);
-        console.log(docs);
+        // console.log(docs);
         if(err){
             res.json({
                 success:'fail',
@@ -109,7 +111,7 @@ router.post('/pwdlogin/',function(req,res,next){
     Model.find({PhoneNum: req.body.cellphone},function(err,docs){
         console.log(req.body.cellphone);
         console.log(req.body.password);
-        console.log(docs);
+        // console.log(docs);
         if(err){
             res.json({
                 success:'fail',
@@ -152,8 +154,8 @@ router.post('/queryID/',function(req,res,next){
     var array=[String];
     array=req.body.uid.split(',');
     Model.find({UserID:{$in:array}},function(err,docs){
-        console.log(req.body.uid);
-        console.log(docs);
+        console.log('user IDs='+ req.body.uid);
+        // console.log(docs);
         if(err){
             res.json({
                 success:'fail',

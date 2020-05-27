@@ -33,7 +33,7 @@ router.post('/',function(req,res,next){
 router.post('/album/',function(req,res,next){
     Model.find({UserID:req.body.uid},function(err,docs){
         console.log(req.body.uid);
-        console.log(docs);
+        // console.log(docs);
         if(err){
             res.json({
                 success:'fail',

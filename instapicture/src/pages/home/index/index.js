@@ -1,33 +1,32 @@
 import React from 'react';
-//import { PanResponder,Alert} from "react-native";
-import Swiper from '../../../assets/js/libs/swiper.min.js';
 import config from '../../../assets/js/conf/config.js';
 import {request} from '../../../assets/js/libs/request.js';
 import {connect} from "react-redux";
-import {lazyImg,setScrollTop} from '../../../assets/js/utils/util.js';
+import {safeAuth, lazyImg,setScrollTop} from '../../../assets/js/utils/util.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faList, faUserCircle, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import {faUserCircle, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 import imgURL from '../../../assets/images/home/index/ins-title.png';
 import {Toast} from "antd-mobile";
 
 import WeiBoList from './contentPage/WeiBoList.js' ;
-import Recitem from './data/item.json';
-import Recfriend from './data/friend.json';
 
 import styles from './css/ListItemStyle.css'
 import FriendList from './contentPage/friendList.js';
 
 
 class IndexComponent extends React.Component{
-    constructor(){
-        super();
+     constructor(props){
+        super(props);
+        safeAuth(props);
         this.state = {
             bMask:false,
             sCartPanel:Css['down'],
             sRecfriend:[],
             sRecitem:[],
+            RecFriendIDs:[],
+            RecItemIDs:[],
             bScroll:false,
             isFresh:false,
             pageStyle:{display:"none"},
@@ -136,11 +135,13 @@ class IndexComponent extends React.Component{
             uploadscom:e.target.value
         })
     }
-    sureUpload(){
+    async sureUpload(){
+        var tmp_image_id;
+        var tmp_item_id;
         console.log(this.state.uploads,this.state.uploadsfile,this.state.uploadscom);
         let sUrl=config.proxyBaseUrl+"/api/items/release/?token="+config.token;
 
-        request(sUrl, "post",{uid:this.props.state.user.uid,upic:this.state.uploadsfile,ucomment:this.state.uploadscom}).then(res=>{
+        await request(sUrl, "post",{uid:this.props.state.user.uid,upic:this.state.uploadsfile,ucomment:this.state.uploadscom}).then(res=>{
             // console.log("enter",res);
             if (res.code ===200){
                 if (!this.bMove){
@@ -148,29 +149,59 @@ class IndexComponent extends React.Component{
                 }
                 Toast.info(res.data,3);
                 this.setState({uploads:"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-26-download.jpg",uploadscom:''});
+                tmp_image_id = res.image_id;
+                tmp_item_id = res.item_id
             }else{
                 Toast.info("发布未成功",2);
             }
         });
-
         if (!this.bMove){
             this.setState({sCartPanel:Css['down'],bMask:false});
         }
         Toast.info("发布成功",2);
+
+        sUrl=config.proxyBaseUrl+"/python/update_image_feature?token="+config.token;
+        await request(sUrl, "post",{uimgid: tmp_image_id, uweight:2.0}).then(res=>{
+            console.log('update image feature: ' + res.success)
+        });
+        sUrl=config.proxyBaseUrl+"/python/update_item_feature?token="+config.token;
+        await request(sUrl, "post",{uitemid: tmp_item_id}).then(res=>{
+            console.log('update item feature: ' + res.success)
+        });
+        await request(config.proxyBaseUrl+'/python/update_user_feature?token='+config.token,
+            "post", {uid: this.props.state.user.uid}).then(res=>{
+            console.log('update user feature: ' + res.success)
+        });
     }
-    getReco(){
-            request(config.proxyBaseUrl+"/api/userinfos/queryID?token="+config.token,"post",{uid:Recfriend.data}).then(res=>{
-                if (res.code ===200){
-                    this.setState({sRecfriend:res.data},()=>{
-                    });
-                }
-            } );
-            request(config.proxyBaseUrl+"/api/items/queryID?token="+config.token,"post",{uid: Recitem.data}).then(res=>{
-                if (res.code ===200){
-                    this.setState({sRecitem:res.data},()=>{
-                    });
-                }
-            } );
+    async getReco(){
+        await request(config.proxyBaseUrl+"/python/get_rec_items?token="+config.token,"post",
+            {uid: this.props.state.user.uid}).then(res=>{
+            if (res.code ===200){
+                this.setState({RecItemIDs:res.data},()=>{
+                });
+            }
+        } ).catch(err=>{console.log(err)});
+        await request(config.proxyBaseUrl+"/python/get_rec_users?token="+config.token,"post",
+            {uid: this.props.state.user.uid}).then(res=>{
+            if (res.code ===200){
+                this.setState({RecFriendIDs:res.data},()=>{
+                });
+            }
+        } ).catch(err=>{console.log(err)});
+        await request(config.proxyBaseUrl+"/api/items/queryID?token="+config.token,"post",
+            {uid: this.state.RecItemIDs}).then(res=>{
+            if (res.code ===200){
+                this.setState({sRecitem:res.data},()=>{
+                });
+            }
+        } );
+        await request(config.proxyBaseUrl+"/api/userinfos/queryID?token="+config.token,"post",
+            {uid: this.state.RecFriendIDs}).then(res=>{
+            if (res.code ===200){
+                this.setState({sRecfriend:res.data},()=>{
+                });
+            }
+        } );
     }
     
     render(){

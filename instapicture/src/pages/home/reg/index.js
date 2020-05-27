@@ -26,7 +26,7 @@ export default class RegIndex extends React.Component{
                     'checked':false
                 },
                 {
-                    'title':"磁带播放器",
+                    'title':"磁带播放机",
                     'checked':false
                 },
                 {
@@ -99,6 +99,8 @@ export default class RegIndex extends React.Component{
                 inter.push(this.state.hobby[i].title);
             }
         };
+        inter = inter.join();
+        console.log('inter=' + inter);
         let resData=await this.isSameCellphone();
         if(!this.state.sCellphone.match(/^1[0-9][0-9]{9}/)){
             Toast.info("您输入的手机号格式不正确",2);
@@ -122,12 +124,23 @@ export default class RegIndex extends React.Component{
             this.bSubmit=false;
             let sUrl=config.proxyBaseUrl+"/api/userinfos/reginfo?token="+config.token;
             console.log(sUrl);
-            request(sUrl, "post",{id:this.state.sID,nickname:this.state.sNickname, cellphone:this.state.sCellphone,password:this.state.sPassword,gender:this.state.sGender,interest:inter}).then(res=>{
+            await request(sUrl, "post",{id:this.state.sID,nickname:this.state.sNickname,
+                cellphone:this.state.sCellphone,password:this.state.sPassword,gender:this.state.sGender,interest:inter}).then(res=>{
                 console.log("bsumbmit",res)
                 if (res.code ===200){
                     this.props.history.goBack();
                 }
             });
+
+            await request(config.proxyBaseUrl+'/python/update_user_feature?token='+config.token,
+            "post", {uid: this.state.sID}).then(res=>{
+                console.log('update user feature: ' + res.success)
+            });
+
+            await request(config.proxyBaseUrl+"/python/update_social_feature?token="+config.token,
+                "post",{uid: this.state.sID}).then(res=>{
+            console.log('update social feature: ' + res.success)
+        });
         }
 
     }

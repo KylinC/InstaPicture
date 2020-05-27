@@ -100,8 +100,9 @@ router.post('/queryinfo/',function(req,res,next){
 router.post('/queryID/',function(req,res,next){
     var array=[String];
     array=req.body.uid.split(',');
+    console.log('item IDs:' + array);
     Model.find({ItemID:{$in:array}},function(err,docs){
-        console.log(docs);
+        // console.log(docs);
         if(err){
             res.json({
                 success:'fail',
@@ -148,8 +149,8 @@ router.post('/uploadimg/',upload.single('imgfile'),function(req,res,next){
 })
 
 router.post('/release/',function(req,res,next){
-    var imageid=Math.floor(Math.random()*(4000-2000+1)+2000);
-
+    var imageid=Math.floor(Math.random()*(40000000-2000+1)+2000);
+    var itemid=Math.floor(Math.random()*(40000000-2000+1)+4521);
     var newimage = new imgModel({
         ImageID : imageid,
         UserID : req.body.uid,
@@ -165,7 +166,7 @@ router.post('/release/',function(req,res,next){
     });
 
     var newitem = new Model({
-        ItemID : Math.floor(Math.random()*(4000-2000+1)+2000),
+        ItemID : itemid,
         OwnerID: req.body.uid,
         Text: req.body.ucomment,
         ImageID:imageid,
@@ -185,7 +186,9 @@ router.post('/release/',function(req,res,next){
     res.json({
         success:'true',
         code:200,
-        data:"发布成功！"
+        data:"发布成功！",
+        image_id:imageid,
+        item_id:itemid
     })
 })
 
