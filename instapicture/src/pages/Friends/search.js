@@ -12,31 +12,6 @@ class Search extends React.Component{
         this.state={
             username:"",
             data:[
-                {
-                    Name:"lucy",
-                    imgRoad:'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-25-aa.jpg',
-                    tags:['只爱美剧',"品茶"]
-                },
-                {
-                    Name:"simon",
-                    imgRoad:'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-04-29-%E6%88%AA%E5%B1%8F2020-04-29%20%E4%B8%8B%E5%8D%888.29.19.png',
-                    tags:['非洲鼓', '烘焙', '萌萌哒']
-                },
-                {
-                    Name:"小问号的朋友",
-                    imgRoad:'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-25-6e7f837cly1gexlxjjkdgj21d81d8n8o.jpg',
-                    tags:['玄不救非，氪不改命']
-                },
-                {
-                    Name:"Morty",
-                    imgRoad:'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-25-074422.jpg',
-                    tags:['有点怂','青春期小孩']
-                },
-                {
-                    Name:"三楼的男票",
-                    imgRoad:'http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-25-6e7f837cly1gexlxjwzzaj21d81d8amb.jpg',
-                    tags:['写代码太恶心了']
-                }
             ]
         }
     }
