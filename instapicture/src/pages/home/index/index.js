@@ -138,7 +138,7 @@ class IndexComponent extends React.Component{
     async sureUpload(){
         var tmp_image_id;
         var tmp_item_id;
-        console.log(this.state.uploads,this.state.uploadsfile,this.state.uploadscom);
+        // console.log(this.state.uploads,this.state.uploadsfile,this.state.uploadscom);
         let sUrl=config.proxyBaseUrl+"/api/items/release/?token="+config.token;
 
         await request(sUrl, "post",{uid:this.props.state.user.uid,upic:this.state.uploadsfile,ucomment:this.state.uploadscom}).then(res=>{
@@ -162,15 +162,15 @@ class IndexComponent extends React.Component{
 
         sUrl=config.proxyBaseUrl+"/python/update_image_feature?token="+config.token;
         await request(sUrl, "post",{uimgid: tmp_image_id, uweight:2.0}).then(res=>{
-            console.log('update image feature: ' + res.success)
+            // console.log('update image feature: ' + res.success)
         });
         sUrl=config.proxyBaseUrl+"/python/update_item_feature?token="+config.token;
         await request(sUrl, "post",{uitemid: tmp_item_id}).then(res=>{
-            console.log('update item feature: ' + res.success)
+            // console.log('update item feature: ' + res.success)
         });
         await request(config.proxyBaseUrl+'/python/update_user_feature?token='+config.token,
             "post", {uid: this.props.state.user.uid}).then(res=>{
-            console.log('update user feature: ' + res.success)
+            // console.log('update user feature: ' + res.success)
         });
     }
     async getReco(){

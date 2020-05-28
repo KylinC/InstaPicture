@@ -1,1 +1,1 @@
-module.exports={baseUrl:"/Users/kylinchan/learningmt/reactshop3.0/reactshop2.0/server/"}
+module.exports={baseUrl:"/Users/kylinchan/learningmt/InstaPicture/instapicture/server/"}
