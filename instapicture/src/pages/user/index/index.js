@@ -66,7 +66,7 @@ class  IndexComponent extends React.Component{
                         <img src={this.state.sHead} alt={this.state.sNickname}/>
                     </div>
                     <div className={Css['nickname']}>{this.state.sNickname}</div>
-                    <div className={Css['points']}>Some Words</div>
+                   
                 </div>
                 <div className={Css["menu-list-wrap"]}>
                     <ul onClick={this.pushPage.bind(this, 'profile/index')}>
