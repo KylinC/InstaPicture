@@ -85,7 +85,12 @@ class PythonServer(object):
         pre_item_feature_batch = torch.from_numpy(np.vstack(
             pre_Items['ItemFeature'].values.tolist())).to(dtype=torch.float)
 
-        if upload_image_num >= 3:
+        friends_dict_list = self.db.Friends.find({'FollowerID': user_id}, {'CelebrityID': 1})
+        friend_num = friends_dict_list.count()
+        if upload_image_num == 0 and friend_num >= 3:
+            user_feature_batch = social_feature_batch
+
+        if upload_image_num >= 3 or friend_num >= 3:
             with torch.no_grad():
                 scores = self.rec_model(user_feature_batch, social_feature_batch, pre_item_feature_batch).squeeze()
             sorted_idxs = torch.argsort(scores, descending=True).numpy()
