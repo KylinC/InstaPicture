@@ -59,7 +59,7 @@ router.post('/reginfo/',function(req,res,next){
        TagFeature: [],
        UserFeature: [],
        SocialFeature:[],
-       ProfileImagePath:"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-04-29-%E6%88%AA%E5%B1%8F2020-04-29%20%E4%B8%8B%E5%8D%888.29.00.png"
+       ProfileImagePath:"http://kylinhub.oss-cn-shanghai.aliyuncs.com/2020-05-28-timg.jpg"
    });
    user.save(function (err) {
     if (err) { 
