@@ -6,6 +6,7 @@ const Urlconfig = require('../utils/config');
 // schema
 var Model=require('../models/items');
 var imgModel=require('../models/images');
+var userModel=require('../models/userInfos');
 
 // password require
 mongoose.connect('mongodb://127.0.0.1:27017/picturebase');//design是数据库名
@@ -180,6 +181,15 @@ router.post('/release/',function(req,res,next){
         }
         else {
             console.log("Res:" + res);
+        }
+    });
+
+    userModel.updateOne({UserID: req.body.uid},{$inc:{UploadImageNum: 1}},function (err,res) {
+        if(err)
+        {
+            console.log(err);
+        }else{
+            console.log(res)
         }
     });
 

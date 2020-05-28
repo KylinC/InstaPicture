@@ -16,6 +16,7 @@ class PythonServer(object):
                  img_root='./public/uploads'):
         self.IMG_FEAT_DIM = 512
         self.USER_FEAT_DIM = 522
+        self.TAG_FEAT_DIM = 10
         self.TotalTagList = ['鲤鱼', '史宾格犬', '磁带播放机', '链锯', '教堂',
                              '法国号角', '垃圾车', '油泵', '高尔夫球', '降落伞']
         self.TOTAL_TAG_NUM = len(self.TotalTagList)
@@ -63,7 +64,8 @@ class PythonServer(object):
         user_id = int(user_id)
         pre_K = min(self.db.Items.count_documents({}), pre_K)
 
-        Users_dict = self.db.UserInfos.find_one({'UserID': user_id}, {'UserFeature': 1, 'SocialFeature': 1, 'TagList': 1})
+        Users_dict = self.db.UserInfos.find_one({'UserID': user_id},
+                                                {'UserFeature': 1, 'SocialFeature': 1, 'TagList': 1, 'UploadImageNum': 1})
         if Users_dict is None:
             return []
         tag_list = Users_dict['TagList']
@@ -71,6 +73,7 @@ class PythonServer(object):
 
         user_feature = torch.tensor(Users_dict['UserFeature'], dtype=torch.float)
         social_feature = torch.tensor(Users_dict['SocialFeature'], dtype=torch.float)
+        upload_image_num = Users_dict['UploadImageNum']
         user_feature_batch = user_feature.repeat(pre_K, 1)
         social_feature_batch = social_feature.repeat(pre_K, 1)
 
@@ -82,10 +85,13 @@ class PythonServer(object):
         pre_item_feature_batch = torch.from_numpy(np.vstack(
             pre_Items['ItemFeature'].values.tolist())).to(dtype=torch.float)
 
-        with torch.no_grad():
-            scores = self.rec_model(user_feature_batch, social_feature_batch, pre_item_feature_batch).squeeze()
-        sorted_idxs = torch.argsort(scores, descending=True).numpy()
-        post_sorted_idxs = sorted_idxs[:post_K]
+        if upload_image_num >= 3:
+            with torch.no_grad():
+                scores = self.rec_model(user_feature_batch, social_feature_batch, pre_item_feature_batch).squeeze()
+            sorted_idxs = torch.argsort(scores, descending=True).numpy()
+            post_sorted_idxs = sorted_idxs[:post_K]
+        else:
+            post_sorted_idxs = np.random.choice([i for i in range(pre_K)], post_K)
         perm_post_sorted_idxs = np.random.permutation(post_sorted_idxs)
         final_sorted_idxs = perm_post_sorted_idxs[:final_K]
 
@@ -102,12 +108,13 @@ class PythonServer(object):
         user_id = int(user_id)
         pre_K = min(self.db.UserInfos.count_documents({}), pre_K)
 
-        Users_dict = self.db.UserInfos.find_one({'UserID': user_id}, {'UserFeature': 1})
+        Users_dict = self.db.UserInfos.find_one({'UserID': user_id}, {'UserFeature': 1, 'UploadImageNum': 1})
         if Users_dict is None:
             return []
         post_K = min(pre_K, post_K)
 
         user_feature = torch.tensor(Users_dict['UserFeature'], dtype=torch.float).unsqueeze(0)
+        upload_image_num = Users_dict['UploadImageNum']
 
         pre_UserInfos_dict_list = self.db.UserInfos.aggregate([{'$sample': {'size': pre_K}}])
         pre_UserInfos_dict_list = list(pre_UserInfos_dict_list)
@@ -117,7 +124,11 @@ class PythonServer(object):
             pre_UserInfos['UserFeature'].values.tolist())).to(dtype=torch.float)
         # pre_friend_tag_list = pre_UserInfos['TagList'].values
 
-        similarities = torch.cosine_similarity(user_feature, pre_friend_user_feature_batch)
+        if upload_image_num >= 3:
+            similarities = torch.cosine_similarity(user_feature, pre_friend_user_feature_batch)
+        else:
+            similarities = torch.cosine_similarity(user_feature[:, -self.TAG_FEAT_DIM:],
+                                                   pre_friend_user_feature_batch[:, -self.TAG_FEAT_DIM:])
         sorted_idxs = torch.argsort(similarities, descending=True).numpy()
         post_sorted_idxs = sorted_idxs[:post_K]
         # print('Top {} similarity: {}'.format(post_K, similarities[torch.tensor(post_sorted_idxs, dtype=torch.long)]))
